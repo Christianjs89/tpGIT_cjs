@@ -4,4 +4,19 @@ Requiere tambien 5 lineas
 ###########################
 $$$$$$$$$$$$$$$$$$$$$$$$$$$
 
+
+
+
+
+
+
+Solucion al conflicto del merge con version 3:
+
+<<<<<<< HEAD
 Se agrega esta 6ta linea en version 3
+
+
+=======
+Esta misma linea ya fue modificada en version3.
+Creando conflicto con version 3 para version 6
+>>>>>>> newBranch
