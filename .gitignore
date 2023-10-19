@@ -1,0 +1,5 @@
+# Ignore html files
+*.html
+
+# Ignore output dir
+output/	
