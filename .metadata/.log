@@ -264,3 +264,15 @@ Reason: (5) Unknown MCU found on target.
 
 !ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2023-10-29 14:27:22.732
 !MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2023-10-29 15:20:55.682
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 22 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2023-10-29 15:20:55.683
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2023-10-29 15:20:55.683
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 22 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2023-10-29 15:20:55.684
+!MESSAGE Existing sessions are:

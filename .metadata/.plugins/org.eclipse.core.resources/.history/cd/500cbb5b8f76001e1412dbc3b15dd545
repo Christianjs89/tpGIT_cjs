@@ -45,7 +45,7 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 delay_t delayHandle; // declarar variable tipo delay_t p/manejar delay
 
-uint16_t delay[] = {D1,D2,D3}; // retardos definidos en main.h para el parpadeo del LED en c/ciclo
+uint8_t delay[] = {D1,D2,D3}; // retardos definidos en main.h para el parpadeo del LED en c/ciclo
 uint8_t repeat[] = {R1,R2,R3}; // cantidad de parpadeos del patron
 
 /* USER CODE END PV */
@@ -94,8 +94,8 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  //HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, SET); // iniciar con LED encendido
-  //HAL_Delay(250); // mantener x 250 ms solo para verificar inicio
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, SET); // iniciar con LED encendido
+  HAL_Delay(250); // mantener x 250 ms solo para verificar inicio
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,9 +104,6 @@ int main(void)
 
   while(1){
 
-	  if(cycle >= 3){
-		  cycle = 0; // solo hay 3 ciclos -> reinicializar.
-	  }
 	  // definir delay
 	  delayWrite(&delayHandle, delay[cycle]);
 	  uint8_t count = 0; // inicializar conteo de repeticion
@@ -117,10 +114,6 @@ int main(void)
 		  if(delayRead(&delayHandle) == true){ // si timeout cambiar estado del LED
 			  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 			  count++; // incrementar conteo cada vez que ocurre un toggle
-		  }
-		  if(count > repeat[cycle]*2){ // una repeticion es un apagado y un encendido (count*2)
-			  cycle++; // pasar al siguiente ciclo
-			  break;
 		  }
 	  }
 

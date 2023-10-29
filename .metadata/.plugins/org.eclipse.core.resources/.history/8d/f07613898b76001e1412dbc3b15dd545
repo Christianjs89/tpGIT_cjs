@@ -90,13 +90,9 @@ void delayWrite( delay_t * delay, tick_t duration ); // cambiar la duracion del 
 
 /* USER CODE BEGIN Private defines */
 // temporizado de cada ciclo de parpadeo del LED en ms
-#define D1 1000
-#define D2 200
-#define D3 100
-// Cantidad de repeticiones del patron
-#define R1 5
-#define R2 5
-#define R3 5
+#define C1 1000
+#define C2 500
+#define C3 250
 
 /* USER CODE END Private defines */
 
