@@ -2,4 +2,7 @@
 *.html
 
 # Ignore output dir
-output/	
+output/
+
+# Ignore all peer revision directories: rev_projectName/	
+rev*/
