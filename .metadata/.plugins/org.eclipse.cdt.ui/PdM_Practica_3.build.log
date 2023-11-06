@@ -1,9 +1,12 @@
-20:13:56 **** Incremental Build of configuration Debug for project PdM_Practica_3 ****
+10:33:47 **** Incremental Build of configuration Debug for project PdM_Practica_3 ****
 make -j12 all 
 arm-none-eabi-gcc "../Drivers/API/Src/API_delay.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Inc" -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_delay.d" -MT"Drivers/API/Src/API_delay.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/API/Src/API_delay.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Inc" -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Inc" -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_hal_msp.d" -MT"Core/Src/stm32f1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Inc" -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM_Practica_3/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_it.d" -MT"Core/Src/stm32f1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_it.o"
 ../Drivers/API/Src/API_delay.c: In function 'delayRead':
-../Drivers/API/Src/API_delay.c:32:36: warning: implicit declaration of function 'HAL_GetTick' [-Wimplicit-function-declaration]
-   32 |                 delay->startTime = HAL_GetTick(); // tomar valor de contador en [ms] actual
+../Drivers/API/Src/API_delay.c:35:36: warning: implicit declaration of function 'HAL_GetTick' [-Wimplicit-function-declaration]
+   35 |                 delay->startTime = HAL_GetTick(); // tomar valor de contador en [ms] actual
       |                                    ^~~~~~~~~~~
 arm-none-eabi-gcc -o "PdM_Practica_3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\chris\STM32CubeIDE\workspace_1.13.2\PdM_repositorio\PdM_Practica_3\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PdM_Practica_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: PdM_Practica_3.elf
@@ -11,11 +14,11 @@ Finished building target: PdM_Practica_3.elf
 arm-none-eabi-size   PdM_Practica_3.elf 
 arm-none-eabi-objdump -h -S  PdM_Practica_3.elf  > "PdM_Practica_3.list"
    text	   data	    bss	    dec	    hex	filename
-   5812	     32	   1656	   7500	   1d4c	PdM_Practica_3.elf
+   5864	     32	   1656	   7552	   1d80	PdM_Practica_3.elf
 Finished building: default.size.stdout
  
 Finished building: PdM_Practica_3.list
  
 
-20:13:57 Build Finished. 0 errors, 1 warnings. (took 1s.196ms)
+10:33:50 Build Finished. 0 errors, 1 warnings. (took 2s.952ms)
 

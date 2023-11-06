@@ -16,6 +16,9 @@
 	* @retval Ninguno
 	*/
 void delayInit( delay_t * delay, tick_t duration ){
+	if(duration > 10000) duration = 10000; // limitar el tiempo a 10 segundos
+	if(duration < 5) duration = 5; // limitar el tiempo minimo a 5 ms
+
 	delay->duration = duration;
 	delay->running = false;
 }
@@ -49,5 +52,8 @@ bool_t delayRead( delay_t * delay ){
 	* @retval Ninguno
 	*/
 void delayWrite( delay_t * delay, tick_t duration ){
+	if(duration > 10000) duration = 10000; // limitar el tiempo a 10 segundos
+	if(duration < 5) duration = 5; // limitar el tiempo minimo a 5 ms
+
 	delay->duration = duration;
 }
