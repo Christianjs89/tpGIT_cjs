@@ -6,3 +6,6 @@ output/
 
 # Ignore all peer revision directories: rev_projectName/	
 rev*/
+
+# Ignore local backup directory
+backup/

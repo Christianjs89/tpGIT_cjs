@@ -11,5 +11,7 @@ _Repositorio Christian J. S._
 
 > PdM/ Practica 2 - delay no bloqueante, patrones varios de parpadeo de LED [PdM_Practica_2]  
 
-> PdM/ Practica 3 - Modularizacion de libreria de retardo no bloqueante en directorio "API" [PdM_Practica_2]  
+> PdM/ Practica 3 - Modularizacion de libreria de retardo no bloqueante en directorio "API" [PdM_Practica_3]  
+
+> PdM/ Practica 4 - sistema de pulsador anti rebote aplicando el metodo de Maquina de Estados Finitos [PdM_Practica_4_P1 _P2]  
 

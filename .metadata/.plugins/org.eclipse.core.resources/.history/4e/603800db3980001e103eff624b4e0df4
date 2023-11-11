@@ -1,0 +1,43 @@
+/*
+ * API_debounce.h
+ *
+ *  Created on: Nov 10, 2023
+ *      Author: chris
+ */
+
+#ifndef API_INC_API_DEBOUNCE_H_
+#define API_INC_API_DEBOUNCE_H_
+
+#endif /* API_INC_API_DEBOUNCE_H_ */
+
+/* Includes */
+#include "API_delay.h" // incluir libreria delay para utilizar en API_debounce
+#include "stm32f1xx.h" // contiene la definicion de SET/RESET pin
+#include "stm32f1xx_hal_gpio.h" // contiene la definicion de puertos y pines de la f103
+
+/* Defines */
+#define DEBOUNCE_DELAY 40 // delay del sistema antirebote en milisegundos
+
+#ifndef LD2_Pin
+#define LD2_Pin GPIO_PIN_5
+#endif
+
+#ifndef LD2_GPIO_Port
+#define LD2_GPIO_Port GPIOA
+#endif
+
+#ifndef B1_Pin
+#define B1_Pin GPIO_PIN_13
+#endif
+
+#ifndef B1_GPIO_Port
+#define B1_GPIO_Port GPIOC
+#endif
+
+/* Function prototypes*/
+void debounceFSM_init(); // cargar estado inicial
+void debounceFSM_update(); // leer entradas, logica de transicion de estados, actualizar salidas
+void buttonPressed(); // enceder led
+void buttonReleased(); // apagar led
+
+
