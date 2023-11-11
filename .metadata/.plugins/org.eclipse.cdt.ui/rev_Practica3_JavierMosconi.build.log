@@ -1,0 +1,17 @@
+20:17:30 **** Incremental Build of configuration Debug for project rev_Practica3_JavierMosconi ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/rev_Practica3_JavierMosconi/Drivers/API/Inc" -I"C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/rev_Practica3_JavierMosconi/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "rev_Practica3_JavierMosconi.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\chris\STM32CubeIDE\workspace_1.13.2\PdM_repositorio\rev_Practica3_JavierMosconi\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="rev_Practica3_JavierMosconi.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: rev_Practica3_JavierMosconi.elf
+ 
+arm-none-eabi-size   rev_Practica3_JavierMosconi.elf 
+arm-none-eabi-objdump -h -S  rev_Practica3_JavierMosconi.elf  > "rev_Practica3_JavierMosconi.list"
+   text	   data	    bss	    dec	    hex	filename
+   7648	     24	   1640	   9312	   2460	rev_Practica3_JavierMosconi.elf
+Finished building: default.size.stdout
+ 
+Finished building: rev_Practica3_JavierMosconi.list
+ 
+
+20:17:31 Build Finished. 0 errors, 0 warnings. (took 549ms)
+
