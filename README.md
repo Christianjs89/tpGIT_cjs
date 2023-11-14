@@ -1,3 +1,4 @@
+
 # Carrera de Especializacion de Sistemas Embebidos UBA 2023  
 
 _Repositorio Christian J. S._  
@@ -14,4 +15,6 @@ _Repositorio Christian J. S._
 > PdM/ Practica 3 - Modularizacion de libreria de retardo no bloqueante en directorio "API" [PdM_Practica_3]  
 
 > PdM/ Practica 4 - sistema de pulsador anti rebote aplicando el metodo de Maquina de Estados Finitos [PdM_Practica_4_P1 _P2]  
+
+> PCSE/ Controlador de LCD 16x2 por I2C HD44780/PCF8574 [PCSE_driver_LCD]  
 

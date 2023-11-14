@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="DEBOUNCE_DELAY"/>
+		<item key="selection" value="lcd_print_text"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="lcd_print_text"/>
+			<item value="send_bytes_i2c"/>
+			<item value="SHIFT_POS"/>
+			<item value="entry_mode"/>
+			<item value="NUM_"/>
 			<item value="DEBOUNCE_DELAY"/>
 			<item value="GPIOA"/>
 			<item value="GPIO"/>
@@ -18,19 +23,14 @@
 			<item value="GPIO_PIN_"/>
 			<item value="LD2_GPIO_Port"/>
 			<item value="GPIO_PIN_14"/>
-			<item value="GPIO_PIN_13"/>
-			<item value="SET"/>
-			<item value="port"/>
-			<item value="delay"/>
-			<item value="static"/>
 		</list>
 		<list key="replacehistory">
 			<item value="delayHandle"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1050"/>
-		<item key="DIALOG_Y_ORIGIN" value="280"/>
+		<item key="DIALOG_X_ORIGIN" value="953"/>
+		<item key="DIALOG_Y_ORIGIN" value="496"/>
 		<item key="DIALOG_WIDTH" value="511"/>
 		<item key="DIALOG_HEIGHT" value="523"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
