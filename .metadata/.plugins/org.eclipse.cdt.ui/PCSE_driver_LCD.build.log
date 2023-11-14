@@ -1,0 +1,30 @@
+20:16:04 **** Incremental Build of configuration Debug for project PCSE_driver_LCD ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'control_backlight':
+../Core/Src/main.c:458:55: warning: passing argument 3 of 'HAL_I2C_Master_Transmit' makes pointer from integer without a cast [-Wint-conversion]
+  458 |         HAL_I2C_Master_Transmit(&hi2c1, slaveAddress, cmd, 1, 100);
+      |                                                       ^~~
+      |                                                       |
+      |                                                       uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32f1xx_hal_conf.h:298,
+                 from ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:563:98: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
+  563 | HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                                         ~~~~~~~~~^~~~~
+arm-none-eabi-gcc -o "PCSE_driver_LCD.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\chris\STM32CubeIDE\workspace_1.13.2\PdM_repositorio\PCSE_driver_LCD\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PCSE_driver_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PCSE_driver_LCD.elf
+ 
+arm-none-eabi-size   PCSE_driver_LCD.elf 
+arm-none-eabi-objdump -h -S  PCSE_driver_LCD.elf  > "PCSE_driver_LCD.list"
+   text	   data	    bss	    dec	    hex	filename
+   9088	     20	   1724	  10832	   2a50	PCSE_driver_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: PCSE_driver_LCD.list
+ 
+
+20:16:05 Build Finished. 0 errors, 1 warnings. (took 548ms)
+
