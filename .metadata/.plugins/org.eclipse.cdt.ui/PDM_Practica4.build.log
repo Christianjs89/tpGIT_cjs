@@ -1,0 +1,10 @@
+14:44:45 **** Incremental Build of configuration Debug for project PDM_Practica4 ****
+make -j12 all 
+arm-none-eabi-size   PDM_Practica4.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10976	    112	   1928	  13016	   32d8	PDM_Practica4.elf
+Finished building: default.size.stdout
+ 
+
+14:44:47 Build Finished. 0 errors, 0 warnings. (took 1s.392ms)
+

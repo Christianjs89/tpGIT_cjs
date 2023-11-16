@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdbool.h>
+#include "API_lcd_i2c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,89 +37,6 @@
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
-// I2C address
-#define LCD_ADDRESS 0b00100111 // 0x27 >> PCF8574 0 0 1 0 0 A2 A1 A0  & A2=A1=A0=1
-#define SLAVE_ADDRESS_LCD 0x4E
-
-// Control bit positions in sent byte
-#define RS_POS	0 // P0
-#define RW_POS	1 // P1
-#define E_POS	2 // P2
-#define BT_POS	3 // P3
-#define DB4_POS	4 // P4
-#define DB5_POS 5 // P5
-#define DB6_POS 6 // P6
-#define DB7_POS 7 // P7
-
-#define DB3_POS 3
-#define DB2_POS 2
-#define DB1_POS 1
-#define DB0_POS 0
-
-// Control bit values
-#define RS_DATA 1
-#define RS_INSTRUCTION 0
-#define RW_READ 1
-#define RW_WRITE 0
-#define E_HIGH 1
-#define E_LOW 0
-#define BT_ON 1
-#define BT_OFF 0
-
-// Configuration bit position ---
-// Entry Mode
-#define INC_DEC_POS 1
-#define SHIFT_DISPLAY_ON_OFF_POS	0
-// Display control
-#define DISPLAY_ON_OFF_POS 2
-#define CURSOR_ON_OFF_POS 1
-#define BLINK_ON_OFF_POS 0
-// Cursor & display shift
-#define CURSOR_DISPLAY_SHIFT_POS 3
-#define SHIFT_DIRECTION_POS 2
-// Function set
-#define DATA_LENGTH_POS	4
-#define DISPLAY_LINES_POS 3
-#define CHAR_FONT_POS 2
-// Read & busy flag address
-#define BUSY_FLAG_POS 7
-
-// Configuration bit values ---
-// Entry mode
-#define INCREMENT 1 // I/D
-#define DECREMENT 0 // I/D
-#define SHIFT_DISPLAY_ON	1 // S
-#define SHIFT_DISPLAY_OFF	0 // S
-// Display control
-#define DISPLAY_ON	1 // D
-#define DISPLAY_OFF	0 // D
-#define CURSOR_ON	1 // C
-#define CURSOR_OFF	0 // C
-#define CURSOR_BLINK_ON		1 // B
-#define CURSOR_BLINK_OFF	0 // B
-// Cursor & display shift
-#define DISPLAY_SHIFT	1 // S/C
-#define CURSOR_SHIFT	0 // S/C
-#define SHIFT_RIGHT		1 // R/L
-#define SHIFT_LEFT		0 // R/L
-// Function set
-#define DATA_LENGTH_8BIT	1 // DL
-#define DATA_LENGTH_4BIT	0 // DL
-#define DISPLAY_LINES_1		0 // N
-#define DISPLAY_LINES_2		1 // N
-#define CHAR_FONT_5X10	1 // F
-#define CHAR_FONT_5X8	0 // F
-// Read & busy flag address
-#define BUSY		1 // BF
-#define NOT_BUSY	0 // BF
-
-// Byte operations
-#define HIGH_NIBBLE 0xF0
-#define LOW_NIBBLE	0x0F
-
-// I2C RW bit
-#define I2C_WRITE	0
-#define I2C_READ	1
 
 /* USER CODE END PM */
 
@@ -129,13 +46,7 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-// Display position
-const uint8_t ddram_address_16x2[2][16] = {
-		{0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F},
-		{0x40,0x41,0x42,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0x4A,0x4B,0x4C,0x4D,0x4E,0x4F}
-};
 
-uint8_t backlight_state = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -144,16 +55,6 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
-
-// LCD Instruction Codes
-void lcd_send_byte(uint8_t byte, bool rs, bool rw); // send a byte to the LCD / chose RS_COMMAND/RS_DATA, RW_READ/RW_WRITE
-void send_bytes_i2c(uint8_t slaveAddress, uint8_t byteSequence[], uint8_t sequenceSize, bool i2c_rw); // send bytes over I2C / specify if it's a READ/WRITE operation
-void lcd_init(); // LCD initialization for 16x2 I2c
-void lcd_set_position(uint8_t row, uint8_t column); // set cursor before writing a new char [1-2,1-16]
-void lcd_print_text(uint8_t text[], uint8_t size); // print a string to the LCD
-void lcd_clear(); // clear LCD screen
-void return_home(); // move cursor to 1,1
-void control_backlight(bool state); // turn on/off backlight
 
 /* USER CODE END PFP */
 
@@ -193,7 +94,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
+  i2c_linker(&hi2c1);
   lcd_init();
 
   /* USER CODE END 2 */
@@ -206,25 +107,23 @@ int main(void)
   uint8_t text2[] = "UBA";
 
   lcd_clear();
-  HAL_Delay(1000);
+  HAL_Delay(2000);
   lcd_print_text(text0, sizeof(text0));
   HAL_Delay(2000);
   lcd_clear();
+  HAL_Delay(2000);
   //lcd_set_position(1, 1);
   return_home();
   lcd_print_text(text1, sizeof(text1));
   lcd_set_position(2, 1);
   lcd_print_text(text2, sizeof(text2));
-  HAL_Delay(2000);
-  // turn off backlight
-  control_backlight(0);
-  HAL_Delay(2000);
-  control_backlight(1);
+
 
   while (1)
   {
 	  // blinking forever
 	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  shift_display(DISPLAY_SHIFT,SHIFT_RIGHT);
 	  HAL_Delay(1000);
 
     /* USER CODE END WHILE */
@@ -379,6 +278,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+
 /*************************************** LCD INSTRUCTIONS *********************************************
  *
  * RS  RW  DB7 DB6 DB5 DB4 DB3 DB2 DB1 DB0
@@ -396,7 +296,7 @@ static void MX_GPIO_Init(void)
 
 /* Serial->Parallel: output Byte Px: D7 D6 D5 D4 BT E RW RS */
 
-
+/*
 void lcd_send_byte(uint8_t byte, bool rs, bool rw){
 	// byte contains 8 bits of information  / byteType can be INSTRUCTION or DATA
 	uint8_t upperByte = (byte & HIGH_NIBBLE); // mask with 1111 0000
@@ -481,6 +381,7 @@ void lcd_init(){
 	lcd_send_byte(0x0C, RS_INSTRUCTION, RW_WRITE); // 0 0 0 0 1 D=1 C=0 B=0 -> 0x0C / Display control:D-display on, C=cursor off, B=blink off
 
 }
+*/
 
 /* USER CODE END 4 */
 

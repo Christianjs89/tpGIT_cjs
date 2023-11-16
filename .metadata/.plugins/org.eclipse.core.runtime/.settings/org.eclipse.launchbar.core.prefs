@@ -1,7 +1,7 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_2 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_3 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_4 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_Practica2_P3_GodoHeredia Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_Practica3_JavierMosconi Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_4_P2 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PCSE_driver_LCD Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Practica 4 STM32F429 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_2 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_3 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_4 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_Practica2_P3_GodoHeredia Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_Practica3_JavierMosconi Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_4_P2 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Practica 4 - Punto 2 STM32F429 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_PDM_Practica4-2_MiguelBlanco Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PCSE_driver_LCD Debug
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PCSE_driver_LCD\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PCSE_driver_LCD\ Debug/activeLaunchTarget=null\:---
@@ -9,3 +9,8 @@ org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_2\ Debug/activeLau
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_2\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PdM_Practica_4\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Practica2_P3\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_PDM_Practica4-1_HerreraGaray\ Debug/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_PDM_Practica4-2_HerreraGaray/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_PDM_Practica4-2_MiguelBlanco\ Debug/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_PDM_Practica4_HerreraGaray\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:rev_PDM_Practica4_HerreraGaray/activeLaunchMode=run

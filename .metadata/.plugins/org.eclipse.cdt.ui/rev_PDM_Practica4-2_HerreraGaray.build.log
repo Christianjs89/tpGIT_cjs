@@ -1,0 +1,10 @@
+18:51:30 **** Incremental Build of configuration Debug for project rev_PDM_Practica4-2_HerreraGaray ****
+make -j12 all 
+arm-none-eabi-size   rev_PDM_Practica4-2_HerreraGaray.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10668	    112	   2000	  12780	   31ec	rev_PDM_Practica4-2_HerreraGaray.elf
+Finished building: default.size.stdout
+ 
+
+18:51:30 Build Finished. 0 errors, 0 warnings. (took 204ms)
+
