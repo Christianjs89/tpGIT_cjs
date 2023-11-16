@@ -9,3 +9,6 @@ rev*/
 
 # Ignore local backup directory
 backup/
+
+# Ignore metadata directory
+.metadata/*

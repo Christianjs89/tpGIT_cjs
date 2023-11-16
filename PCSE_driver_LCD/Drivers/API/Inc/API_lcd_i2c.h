@@ -112,9 +112,11 @@ static const uint8_t ddram_address_16x2[2][16] = {
 };
 
 
+
 /************************************************* LCD FUNCTION DECLARATIONS *************************************************
  * LCD control functions
  * Write to char or strings to LCD, set position, initialize LCD, clear screen, control backlight
+ * Enough time in between instructions is very important to execute all of them
  */
 
 void lcd_send_byte(uint8_t byte, bool rs, bool rw); // send a byte to the LCD / chose RS_COMMAND/RS_DATA, RW_READ/RW_WRITE
@@ -127,3 +129,4 @@ void return_home(); // move cursor to 1,1
 void control_backlight(bool state); // turn on/off backlight
 void i2c_linker(I2C_HandleTypeDef * i2cInstance); // bring i2c handle from main / use AFTER MX_I2C1_Init();
 void shift_display(bool shiftType, bool direction);
+void create_character(uint8_t index, uint8_t mychar[]); // 0-7 storage index, 8 memory locations, array with character shape

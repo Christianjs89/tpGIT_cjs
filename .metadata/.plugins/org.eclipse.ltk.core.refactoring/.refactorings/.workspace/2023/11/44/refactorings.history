@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;PdM_Practica_2/Drivers/API&apos;" deleteContents="false" description="Delete resource &apos;PdM_Practica_2/Drivers/API&apos;" element1="/PdM_Practica_2/Drivers/API" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1698969758440"/>
-</session>

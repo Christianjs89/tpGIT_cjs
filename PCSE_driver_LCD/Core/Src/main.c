@@ -105,26 +105,57 @@ int main(void)
   uint8_t text0[] = "* PCSE *";
   uint8_t text1[] = "CESE 2023";
   uint8_t text2[] = "UBA";
+  const uint8_t space[] = " ";
 
   lcd_clear();
-  HAL_Delay(2000);
+  HAL_Delay(1000);
   lcd_print_text(text0, sizeof(text0));
-  HAL_Delay(2000);
+  HAL_Delay(1000);
   lcd_clear();
-  HAL_Delay(2000);
+  HAL_Delay(1000);
   //lcd_set_position(1, 1);
   return_home();
   lcd_print_text(text1, sizeof(text1));
   lcd_set_position(2, 1);
   lcd_print_text(text2, sizeof(text2));
 
+  lcd_print_text(space, sizeof(space));
+
+  uint8_t mychar1[] = { 0x00, 0x0E, 0x11, 0x11, 0x11,0x0E, 0x00,0x00 }; // empty circle
+  uint8_t mychar2[] = {0x00, 0x00, 0x0A, 0x00, 0x11, 0x0E, 0x00, 0x00}; // face
+  uint8_t mychar3[] = {0x00,0x0E,0x1F,0x1F,0x1F,0x0E,0x00,0x00}; // full circle
+
+  create_character(0, mychar1);
+  create_character(1, mychar2);
+  create_character(3, mychar3);
+
+  lcd_set_position(2, 5);
+
+  lcd_send_byte(0, RS_DATA, RW_WRITE);
+  lcd_send_byte(1, RS_DATA, RW_WRITE);
+  lcd_send_byte(3, RS_DATA, RW_WRITE);
+
+  uint8_t charIndex = 0;
 
   while (1)
   {
 	  // blinking forever
 	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	  shift_display(DISPLAY_SHIFT,SHIFT_RIGHT);
-	  HAL_Delay(1000);
+
+	  HAL_Delay(500);
+
+	  //lcd_send_byte(0x00, RS_DATA, RW_WRITE);
+	  //return_home();
+	  //shift_display(DISPLAY_SHIFT,SHIFT_RIGHT);
+
+	  // display available characters
+	  lcd_set_position(2, 14);
+	  if(charIndex>207) charIndex = 0;
+	  lcd_send_byte(charIndex, RS_DATA, RW_WRITE);
+	  charIndex++;
+
+	  HAL_Delay(500);
+
 
     /* USER CODE END WHILE */
 

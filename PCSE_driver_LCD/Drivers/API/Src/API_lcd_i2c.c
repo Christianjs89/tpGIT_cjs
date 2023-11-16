@@ -46,6 +46,7 @@ void lcd_send_byte(uint8_t byte, bool rs, bool rw){
 	};
 
 	send_bytes_i2c(LCD_ADDRESS, byteSequence, 4, I2C_WRITE);
+	HAL_Delay(5);
 
 }
 
@@ -94,6 +95,22 @@ void shift_display(bool shiftType, bool direction){ // DISPLAY_SHIFT / CURSOR_SH
 	lcd_send_byte(0x1C, 0, 0); // shift display to the right
 }
 
+void create_character(uint8_t index, uint8_t mychar[]){
+	// https://maxpromer.github.io/LCD-Character-Creator/
+	if(index<0) index = 0;
+	if(index>7) index = 7;
+
+	lcd_send_byte(0x40 + 8*index, RS_INSTRUCTION, RW_WRITE); // set cgram memory from 0x40, 0x48, 0x50, etc +8
+	HAL_Delay(50);
+
+	for(uint8_t i = 0; i < 8; i++){
+		lcd_send_byte(mychar[i], RS_DATA, RW_WRITE);
+		HAL_Delay(10);
+	}
+	HAL_Delay(100);
+
+}
+
 void lcd_init(){
 	// initialization sequence p46 HD44780 datasheet
 	HAL_Delay(60); // wait >40 ms
@@ -106,15 +123,19 @@ void lcd_init(){
 	lcd_send_byte(0x20, RS_INSTRUCTION, RW_WRITE); // 0 0 1 DL=0 x x x x -> 0x20 / Function set: DL=4-bit mode
 	// start in 4 bit mode
 	lcd_send_byte(0x28, RS_INSTRUCTION, RW_WRITE); // 0 0 1 0 N=1 F=0 x x -> 0x28 / Function set: N=2-lines, F=5x8
-	HAL_Delay(2);
+	HAL_Delay(10);
 	lcd_send_byte(0x08, RS_INSTRUCTION, RW_WRITE); // 0 0 0 0 1 D=0 C=0 B=0 -> 0x08 / Display control: D=display off, C=cursor off, B=blink off
-	HAL_Delay(2);
-	lcd_send_byte(0x01, RS_INSTRUCTION, RW_WRITE); // 0 0 0 0 0 0 0 1 -> 0x01 / Display clear
-	HAL_Delay(2);
+	HAL_Delay(10);
+	lcd_clear();
+	HAL_Delay(10);
 	lcd_send_byte(0x06, RS_INSTRUCTION, RW_WRITE); // 0 0 0 0 0 1 ID=1 S=0 -> 0x06/ Entry mode: ID=increment, S=no display shift
-	HAL_Delay(2);
+	HAL_Delay(10);
 	lcd_send_byte(0x0C, RS_INSTRUCTION, RW_WRITE); // 0 0 0 0 1 D=1 C=0 B=0 -> 0x0C / Display control:D-display on, C=cursor off, B=blink off
-
+	HAL_Delay(10);
+	lcd_clear();
+	HAL_Delay(10);
+	return_home();
+	HAL_Delay(10);
 }
 
 void i2c_linker(I2C_HandleTypeDef * i2cInstance){
