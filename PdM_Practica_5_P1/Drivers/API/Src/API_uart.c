@@ -34,7 +34,9 @@ bool_t uartInit(){
 	uartHandle.Init.OverSampling = UART_OVERSAMPLING_16; // cantidad de muestras por tiempo de bit
 
 	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
-		//print_uart_config(uartHandle);
+		HAL_Delay(50);
+		print_uart_config(uartHandle);
+		//uartSendString("INICIO\r\n");
 		returnFlag = true;
 	}
 
@@ -97,33 +99,61 @@ void uartReceiveStringSize(uint8_t * pstring, uint16_t size){
 
 
 void print_uart_config(UART_HandleTypeDef uart){
+	uartSendString("*** INICIO ***\r\n");
+	// Instance
+	if (uart.Instance == USART1){
+		uartSendString("Instance: USART1\r\n");
+	}
+	else if (uart.Instance == USART2){
+		uartSendString("Instance: USART2\r\n");
+	}
+	else if (uart.Instance == USART3) {
+		uartSendString("Instance: USART3\r\n");
+	}
+	else {
+		uartSendString("Instance: ERROR\r\n");
+	}
+
+}
+/*
+void print_uart_config(UART_HandleTypeDef uart){
+	uartSendString("** INICIO **\r\n");
+	const uint8_t configSize = 32;
+
 	struct uartStructure{
-		char instance;
-		char baudrate;
-		char wordLength;
-		char stopBits;
-		char parity;
-		char mode;
-		char flowControl;
-		char oversampling;
+		char instance[configSize];
+		char baudrate[configSize];
+		char wordLength[configSize];
+		char stopBits[configSize];
+		char parity[configSize];
+		char mode[configSize];
+		char flowControl[configSize];
+		char oversampling[configSize];
 	} uartConfig;
 
 	// Instance
 	if (uart.Instance == USART1){
-		uartConfig.instance = "USART1";
+		assign_string(&uartConfig.instance,"Instance: USART1");
+		//uartConfig.instance = "USART1";
 	}
 	else if (uart.Instance == USART2){
-		uartConfig.instance = "USART2";
+		//uartConfig.instance = "USART2";
+		assign_string(&uartConfig.instance,"Instance: USART2");
 	}
 	else if (uart.Instance == USART3) {
-		uartConfig.instance = "USART3";
+		//uartConfig.instance = "USART3";
+		assign_string(&uartConfig.instance,"Instance: USART3");
 	}
 	else {
-		uartConfig.instance = "ERROR"; // no deberia llegarse nunca aca con HAL_OK
+		//uartConfig.instance = "ERROR"; // no deberia llegarse nunca aca con HAL_OK
+		assign_string(&uartConfig.instance,"Instance: ERROR");
 	}
 
+
+	uartSendString(uartConfig.instance);
+
 	// baudrate
-	sprintf(uartConfig.baudrate, "%d", uart.Init.BaudRate);
+	//sprintf(uartConfig.baudrate, "%d", uart.Init.BaudRate);
 
 	// WordLength
 	if (uart.Init.WordLength == UART_WORDLENGTH_8B){
@@ -210,4 +240,13 @@ void print_uart_config(UART_HandleTypeDef uart){
 	printf("* > oversampling:	%s\r\n", uartConfig.oversampling);
 	printf("*********************************************************\r\n\r\n");
 
+}
+*/
+
+void assign_string(uint8_t pstring[], uint8_t string2copy[]){
+	uint8_t index = 0;
+	while(1){
+		if((pstring[index] == '\0') || (string2copy[index] == '\0')) break;
+		pstring[index] = string2copy[index];
+	}
 }

@@ -53,3 +53,4 @@ void uartSendStringSize(uint8_t * pstring, uint16_t size);
 
 void uartReceiveStringSize(uint8_t * pstring, uint16_t size);
 void print_uart_config(UART_HandleTypeDef uartHandle);
+void assign_string(uint8_t pstring[], uint8_t string2copy[]);
