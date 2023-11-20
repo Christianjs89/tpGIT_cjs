@@ -1,6 +1,9 @@
 # Ignore html files
 *.html
 
+# Ignore test files
+test_*
+
 # Ignore output dir
 output/
 
