@@ -20,8 +20,8 @@
 
 
 /* DEFINICIONES */
-#define SEND_BUFFER_MAX_SIZE 32 // maxima cantidad de caracteres a transmitir
-#define RECEIVE_BUFFER_MAX_SIZE 32 // maxima cantidad de caracteres a recibir
+#define SEND_BUFFER_MAX_SIZE 127 // maxima cantidad de caracteres a transmitir
+#define RECEIVE_BUFFER_MAX_SIZE 63 // maxima cantidad de caracteres a recibir
 
 #define USE_USART USART2 // UART a utilizar
 

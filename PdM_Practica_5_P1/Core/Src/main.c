@@ -89,7 +89,7 @@ int main(void)
   MX_GPIO_Init();
   //MX_USART2_UART_Init(); // no utilizar
   /* USER CODE BEGIN 2 */
-  uartState = uartInit(); // inicializar uart
+  uartInit(); // inicializar uart / usar uartState para dar aviso?
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,8 +104,11 @@ int main(void)
   uartSendStringSize(&texto2, 3);
   uartSendString(&crlf);
 
+  uint8_t texto4[] = "\r\nIngresar texto: ";
+  uartSendString(&texto4);
+
   uint8_t texto3[RECEIVE_SIZE];
-  uartReceiveStringSize(texto3, RECEIVE_SIZE);
+  uartReceiveStringSize(&texto3, RECEIVE_SIZE);
   uartSendString(&texto3);
 
   while (1)

@@ -34,9 +34,7 @@ bool_t uartInit(){
 	uartHandle.Init.OverSampling = UART_OVERSAMPLING_16; // cantidad de muestras por tiempo de bit
 
 	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
-		HAL_Delay(50);
 		print_uart_config(uartHandle);
-		//uartSendString("INICIO\r\n");
 		returnFlag = true;
 	}
 
@@ -99,154 +97,101 @@ void uartReceiveStringSize(uint8_t * pstring, uint16_t size){
 
 
 void print_uart_config(UART_HandleTypeDef uart){
-	uartSendString("*** INICIO ***\r\n");
+	uartSendString("\r\n**************************** INICIO ****************************\r\n");
 	// Instance
 	if (uart.Instance == USART1){
-		uartSendString("Instance: USART1\r\n");
+		uartSendString("* Instance:		USART1\r\n");
 	}
 	else if (uart.Instance == USART2){
-		uartSendString("Instance: USART2\r\n");
+		uartSendString("* Instance:		USART2\r\n");
 	}
 	else if (uart.Instance == USART3) {
-		uartSendString("Instance: USART3\r\n");
+		uartSendString("* Instance:		USART3\r\n");
 	}
 	else {
-		uartSendString("Instance: ERROR\r\n");
+		uartSendString("* Instance:		ERROR\r\n");
 	}
-
-}
-/*
-void print_uart_config(UART_HandleTypeDef uart){
-	uartSendString("** INICIO **\r\n");
-	const uint8_t configSize = 32;
-
-	struct uartStructure{
-		char instance[configSize];
-		char baudrate[configSize];
-		char wordLength[configSize];
-		char stopBits[configSize];
-		char parity[configSize];
-		char mode[configSize];
-		char flowControl[configSize];
-		char oversampling[configSize];
-	} uartConfig;
-
-	// Instance
-	if (uart.Instance == USART1){
-		assign_string(&uartConfig.instance,"Instance: USART1");
-		//uartConfig.instance = "USART1";
-	}
-	else if (uart.Instance == USART2){
-		//uartConfig.instance = "USART2";
-		assign_string(&uartConfig.instance,"Instance: USART2");
-	}
-	else if (uart.Instance == USART3) {
-		//uartConfig.instance = "USART3";
-		assign_string(&uartConfig.instance,"Instance: USART3");
-	}
-	else {
-		//uartConfig.instance = "ERROR"; // no deberia llegarse nunca aca con HAL_OK
-		assign_string(&uartConfig.instance,"Instance: ERROR");
-	}
-
-
-	uartSendString(uartConfig.instance);
 
 	// baudrate
-	//sprintf(uartConfig.baudrate, "%d", uart.Init.BaudRate);
+	char br[32];
+	sprintf(br,"* BaudRate:		%d\r\n", uart.Init.BaudRate);
+	uartSendString(br);
 
 	// WordLength
 	if (uart.Init.WordLength == UART_WORDLENGTH_8B){
-		uartConfig.wordLength = "UART_WORDLENGTH_8B";
+		uartSendString("* WordLength:		UART_WORDLENGTH_8B\r\n");
 	}
 	else if (uart.Init.WordLength == UART_WORDLENGTH_9B){
-		uartConfig.wordLength = "UART_WORDLENGTH_9B";
+		uartSendString("* WordLength:		UART_WORDLENGTH_9B\r\n");
 	}
 	else{
-		uartConfig.wordLength = "ERROR";
+		uartSendString("* WordLength:		ERROR\r\n");
 	}
 
 	// stopbits
 	if ( uart.Init.StopBits == UART_STOPBITS_1){
-		uartConfig.stopBits = "UART_STOPBITS_1";
+		uartSendString("* StopBits:		UART_STOPBITS_1\r\n");
 	}
 	else if (uart.Init.StopBits == UART_STOPBITS_2){
-		uartConfig.stopBits = "UART_STOPBITS_2";
+		uartSendString("* StopBits:		UART_STOPBITS_2\r\n");
 	}
 	else{
-		uartConfig.stopBits = "ERROR";
+		uartSendString("* StopBits:		ERROR\r\n");
 	}
 
 	// Parity
 	if (uart.Init.Parity == UART_PARITY_NONE){
-		uartConfig.parity = "UART_PARITY_NONE";
+		uartSendString("* Parity:		UART_PARITY_NONE\r\n");
 	}
 	else if (uart.Init.Parity == UART_PARITY_EVEN){
-		uartConfig.parity = "UART_PARITY_EVEN";
+		uartSendString("* Parity:		UART_PARITY_EVEN\r\n");
 	}
 	else if (uart.Init.Parity == UART_PARITY_ODD){
-		uartConfig.parity = "UART_PARITY_ODD";
+		uartSendString("* Parity:		UART_PARITY_ODD\r\n");
 	}
 	else{
-		uartConfig.parity = "ERROR";
+		uartSendString("* Parity:		ERROR\r\n");
 	}
 
 	// mode
 	if (uart.Init.Mode == UART_MODE_TX_RX){
-		uartConfig.mode = "UART_MODE_TX_RX";
+		uartSendString("* Mode:			UART_MODE_TX_RX\r\n");
 	}
 	else if (uart.Init.Mode == UART_MODE_RX){
-		uartConfig.mode = "UART_MODE_RX";
+		uartSendString("* Mode:			UART_MODE_RX\r\n");
 	}
 	else if (uart.Init.Mode == UART_MODE_TX){
-		uartConfig.mode = "UART_MODE_TX";
+		uartSendString("* Mode:			UART_MODE_TX\r\n");
 	}
 	else{
-		uartConfig.mode = "ERROR";
+		uartSendString("* Mode:			ERROR\r\n");
 	}
 
 	// flow control
 	if (uart.Init.HwFlowCtl == UART_HWCONTROL_NONE){
-		uartConfig.flowControl = "UART_HWCONTROL_NONE";
+		uartSendString("* HwFlowCtl:		UART_HWCONTROL_NONE\r\n");
 	}
-	else if (uart.Init.Mode == UART_HWCONTROL_RTS){
-		uartConfig.flowControl = "UART_HWCONTROL_RTS";
+	else if (uart.Init.HwFlowCtl == UART_HWCONTROL_RTS){
+		uartSendString("* HwFlowCtl:		UART_HWCONTROL_RTS\r\n");
 	}
-	else if (uart.Init.Mode == UART_HWCONTROL_CTS){
-		uartConfig.flowControl = "UART_HWCONTROL_CTS";
+	else if (uart.Init.HwFlowCtl == UART_HWCONTROL_CTS){
+		uartSendString("* HwFlowCtl:		UART_HWCONTROL_CTS\r\n");
 	}
-	else if (uart.Init.Mode == UART_HWCONTROL_RTS_CTS){
-		uartConfig.flowControl = "UART_HWCONTROL_RTS_CTS";
+	else if (uart.Init.HwFlowCtl == UART_HWCONTROL_RTS_CTS){
+		uartSendString("* HwFlowCtl:		UART_HWCONTROL_RTS_CTS\r\n");
 	}
 	else{
-		uartConfig.flowControl = "ERROR";
+		uartSendString("* HwFlowCtl:		ERROR\r\n");
 	}
 
 	// oversampling
 	if (uart.Init.OverSampling == UART_OVERSAMPLING_16){
-		uartConfig.oversampling = "UART_OVERSAMPLING_16";
+		uartSendString("* OverSampling:		UART_OVERSAMPLING_16\r\n");
 	}
 	else{
-		uartConfig.oversampling = "ERROR";
+		uartSendString("* OverSampling:		ERROR\r\n");
 	}
 
-	printf("********************* CONFIGURACION *********************\r\n");
-	printf("* > instance:		%s\r\n", uartConfig.instance);
-	printf("* > wordLength:		%s\r\n", uartConfig.wordLength);
-	printf("* > stopBits:		%s\r\n", uartConfig.stopBits);
-	printf("* > parity:			%s\r\n", uartConfig.parity);
-	printf("* > mode:			%s\r\n", uartConfig.mode);
-	printf("* > flowControl:	%s\r\n", uartConfig.flowControl);
-	printf("* > oversampling:	%s\r\n", uartConfig.oversampling);
-	printf("*********************************************************\r\n\r\n");
-
+	uartSendString("****************************************************************\r\n\r\n");
 }
-*/
 
-void assign_string(uint8_t pstring[], uint8_t string2copy[]){
-	uint8_t index = 0;
-	while(1){
-		if((pstring[index] == '\0') || (string2copy[index] == '\0')) break;
-		pstring[index] = string2copy[index];
-	}
-}
