@@ -7,12 +7,8 @@
 
 #include "API_uart.h"
 
-
 /* DECLARACION DE VARIABLES */
 static UART_HandleTypeDef uartHandle; /* handle de la uart con la configuracion y estado del periferico.
- 	 	 	 	 	 	 	 	* Debe poder invocarse en main.c */
-
-
 
 /* DEFINICION DE FUNCIONES */
 
@@ -34,11 +30,9 @@ bool_t uartInit(){
 	uartHandle.Init.OverSampling = UART_OVERSAMPLING_16; // cantidad de muestras por tiempo de bit
 
 	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
-		print_uart_config(uartHandle);
+		print_uart_config(uartHandle); // imprimir configuracion si la config fue exitosa
 		returnFlag = true;
 	}
-
-	//send_uart_config(uartHandle); // enviar a la terminal la configuracion
 
 	return returnFlag;
 }
@@ -95,8 +89,11 @@ void uartReceiveStringSize(uint8_t * pstring, uint16_t size){
 	*(pstring+index) = '\0'; // agregar el NULL al final para conformar el string
 }
 
-
-void print_uart_config(UART_HandleTypeDef uart){
+/* > Descripcion: imprime a la terminal serie la configuracion de la UART
+ * > Parametro: <uart> handler de la uart
+ * > Retorno: ninguno
+ */
+static void print_uart_config(UART_HandleTypeDef uart){
 	uartSendString("\r\n**************************** INICIO ****************************\r\n");
 	// Instance
 	if (uart.Instance == USART1){

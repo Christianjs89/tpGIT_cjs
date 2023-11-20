@@ -12,8 +12,6 @@
 
 
 /* INCLUDES */
-//#include "stm32f1xx_hal_uart.h" // incluir funciones de la HAL uart
-//#include "stm32f1xx_hal_def.h"
 #include "stm32f1xx.h"
 #include "stdbool.h"
 #include "stm32f1xx_hal_uart.h"
@@ -30,27 +28,36 @@ typedef bool bool_t;
 
 /* DECLARACIONES DE FUNCIONES */
 
-/* uartInit
- * > Descripcion: Inicializa la uart con la configuracion preestablecida e imprime dicha config a la terminal
+/* > Descripcion: Inicializa la uart con la configuracion preestablecida y envia dicha config a la terminal
  * > Parametro: ninguno
  * > Retorno: retorna un boolt_t true en caso exito o false caso contrario
  */
 bool_t uartInit();
 
-/* uartSendString
- * > Descripcion: envia un string por la uart, finalizando en el caracter NULL
- * > Parametro: puntero pstring del tipo uint8_t > utilizar como &miTexto
+/* > Descripcion: envia un string (buffer <pstring>) por la uart, finalizando en el caracter NULL
+ * > Parametro: <pstring> puntero del tipo uint8_t
+ * 				El buffer de envio tendra una cantidad maxima de caracteres definida en <SEND_BUFFER_MAX_SIZE>
  * > Retorno: ninguno
  */
 void uartSendString(uint8_t * pstring);
 
-/* > Descripcion: envia una cantidad de caracteres contenidas en un string por la uart
+/* > Descripcion: envia una cantidad de caracteres contenidas en un string (buffer <pstring>) por la uart
  * > Parametro: <pstring> puntero del tipo uint8_t / <size> cantidad de caracteres a enviar rango [1-2^16]
+ * 				El buffer de envio tendra una cantidad maxima de caracteres definida en <SEND_BUFFER_MAX_SIZE>
  * > Retorno: ninguno
  */
 void uartSendStringSize(uint8_t * pstring, uint16_t size);
 
-
+/* > Descripcion: recibe una cantidad de caracteres contenidas en un string por la uart y las almacena en el buffer <pstring>
+ * > Parametro: <pstring> puntero del tipo uint8_t / <size> cantidad de caracteres a recibir rango [1-2^16]
+ * > 			El buffer de recepcion tendra una cantidad maxima de caracteres definida en <RECEIVE_BUFFER_MAX_SIZE>
+ * > Retorno: ninguno
+ */
 void uartReceiveStringSize(uint8_t * pstring, uint16_t size);
-void print_uart_config(UART_HandleTypeDef uartHandle);
-void assign_string(uint8_t pstring[], uint8_t string2copy[]);
+
+/* > Descripcion: imprime a la terminal serie la configuracion de la UART
+ * > Parametro: <uart> handler de la uart
+ * > Retorno: ninguno
+ */
+static void print_uart_config(UART_HandleTypeDef uartHandle);
+

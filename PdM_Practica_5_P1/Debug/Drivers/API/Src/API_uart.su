@@ -1,5 +1,5 @@
-../Drivers/API/Src/API_uart.c:23:8:uartInit	88	static
-../Drivers/API/Src/API_uart.c:51:6:uartSendString	24	static
-../Drivers/API/Src/API_uart.c:66:6:uartSendStringSize	24	static
-../Drivers/API/Src/API_uart.c:83:6:uartReceiveStringSize	24	static
-../Drivers/API/Src/API_uart.c:99:6:print_uart_config	40	static
+../Drivers/API/Src/API_uart.c:19:8:uartInit	88	static
+../Drivers/API/Src/API_uart.c:45:6:uartSendString	24	static
+../Drivers/API/Src/API_uart.c:60:6:uartSendStringSize	24	static
+../Drivers/API/Src/API_uart.c:77:6:uartReceiveStringSize	24	static
+../Drivers/API/Src/API_uart.c:96:13:print_uart_config	40	static
