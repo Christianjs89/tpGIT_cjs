@@ -18,4 +18,7 @@ _Repositorio Christian J. S._
 
 > PCSE/ Controlador de LCD 16x2 por I2C HD44780/PCF8574 [PCSE_driver_LCD]  
 
-> PdM/ Practica 5 - libreria uart para enviar y recibir texto [PdM_Practica_5_P1 _P2]
+> PdM/ Practica 5 - libreria uart para enviar y recibir texto [PdM_Practica_5_P1 _P2]  
+
+> PdM & PCSE/ TP Final - Menu de opciones en LCD, navegacion con un solo pulsador. Opciones: control de LEDs y motor paso a paso [PdM-PCSE_TP_Final]  
+
