@@ -2,4 +2,4 @@
 ../Drivers/API/Src/API_uart.c:46:6:uartSendString	24	static
 ../Drivers/API/Src/API_uart.c:61:6:uartSendStringSize	24	static
 ../Drivers/API/Src/API_uart.c:78:6:uartReceiveStringSize	24	static
-../Drivers/API/Src/API_uart.c:97:6:print_uart_config	24	static
+../Drivers/API/Src/API_uart.c:97:6:print_uart_config	32	static

@@ -1,2 +1,12 @@
-../Drivers/API/Src/API_menuMEF.c:17:6:menuMEF_init	4	static
-../Drivers/API/Src/API_menuMEF.c:24:10:menuMEF_update	16	static
+../Drivers/API/Src/API_menuMEF.c:25:6:menuMEF_init	8	static
+../Drivers/API/Src/API_menuMEF.c:37:10:menuMEF_update	16	static
+../Drivers/API/Src/API_menuMEF.c:66:6:menuMEF_set_state	16	static
+../Drivers/API/Src/API_menuMEF.c:91:6:menuMEF_update_display	32	static
+../Drivers/API/Src/API_menuMEF.c:107:6:menuMEF_execute	8	static
+../Drivers/API/Src/API_menuMEF.c:140:6:menuMEF_reset_state	8	static
+../Drivers/API/Src/API_menuMEF.c:148:6:led_on	16	static
+../Drivers/API/Src/API_menuMEF.c:155:6:led_off	16	static
+../Drivers/API/Src/API_menuMEF.c:162:6:blink_led	24	static
+../Drivers/API/Src/API_menuMEF.c:193:6:blink_stop	16	static
+../Drivers/API/Src/API_menuMEF.c:200:6:motor_stop	4	static
+../Drivers/API/Src/API_menuMEF.c:204:6:menuMEF_user_input	264	static

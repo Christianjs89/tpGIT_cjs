@@ -1,5 +1,5 @@
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o: \
- ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c \
+Drivers/API/Src/API_lcd_i2c.o: ../Drivers/API/Src/API_lcd_i2c.c \
+ C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM-PCSE_TP_Final/Drivers/API/Inc/API_lcd_i2c.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -24,6 +24,7 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+C:/Users/chris/STM32CubeIDE/workspace_1.13.2/PdM_repositorio/PdM-PCSE_TP_Final/Drivers/API/Inc/API_lcd_i2c.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:

@@ -6,7 +6,7 @@
  */
 
 #include "API_uart.h"
-
+#include "stdio.h"
 /* DECLARACION DE VARIABLES */
 static UART_HandleTypeDef uartHandle; // handle de la uart con la configuracion y estado del periferico.
 
@@ -111,8 +111,8 @@ void print_uart_config(UART_HandleTypeDef uart){
 	}
 
 	// baudrate
-	char br[10];
-	sprintf(br,"* BaudRate:		%d\r\n", uart.Init.BaudRate);
+	char br[20];
+	sprintf(br,"* BaudRate:		%d\r\n", (int)uart.Init.BaudRate);
 	uartSendString(br);
 
 	// WordLength
