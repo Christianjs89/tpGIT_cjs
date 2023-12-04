@@ -111,6 +111,11 @@ void create_character(uint8_t index, uint8_t mychar[]){
 
 }
 
+void lcd_print_custom_character(uint8_t customCharArray[], uint8_t index){
+	create_character(index, customCharArray);
+	lcd_send_byte(index, RS_DATA, RW_WRITE);
+}
+
 void lcd_init(){
 	// initialization sequence p46 HD44780 datasheet
 	HAL_Delay(60); // wait >40 ms
@@ -140,4 +145,21 @@ void lcd_init(){
 
 void i2c_linker(I2C_HandleTypeDef * i2cInstance){
 	i2cHandle = *i2cInstance;
+}
+
+void i2c_init(void){
+
+	i2cHandle.Instance = I2C1;
+	i2cHandle.Init.ClockSpeed = 100000;
+	i2cHandle.Init.DutyCycle = I2C_DUTYCYCLE_2;
+	i2cHandle.Init.OwnAddress1 = 0;
+	i2cHandle.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+	i2cHandle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+	i2cHandle.Init.OwnAddress2 = 0;
+	i2cHandle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+	i2cHandle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&i2cHandle) != HAL_OK)
+  {
+    //Error_Handler();
+  }
 }

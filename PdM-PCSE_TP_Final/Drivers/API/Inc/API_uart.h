@@ -17,8 +17,8 @@
 
 
 /* DEFINICIONES */
-#define SEND_BUFFER_MAX_SIZE 127 // maxima cantidad de caracteres a transmitir
-#define RECEIVE_BUFFER_MAX_SIZE 63 // maxima cantidad de caracteres a recibir
+#define SEND_BUFFER_MAX_SIZE 200 // maxima cantidad de caracteres a transmitir
+#define RECEIVE_BUFFER_MAX_SIZE 200 // maxima cantidad de caracteres a recibir
 
 #define USE_USART USART2 // UART a utilizar
 
@@ -53,6 +53,8 @@ void uartSendStringSize(uint8_t * pstring, uint16_t size);
  * > Retorno: ninguno
  */
 void uartReceiveStringSize(uint8_t * pstring, uint16_t size);
+
+void uartReceiveString(uint8_t * pstring, uint16_t size);
 
 /* > Descripcion: imprime a la terminal serie la configuracion de la UART
  * > Parametro: <uart> handler de la uart

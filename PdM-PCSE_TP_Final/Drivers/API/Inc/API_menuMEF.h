@@ -18,23 +18,31 @@
 #define NEXT_TIME 500 // tiempo maximo a considerar como 'avance' de opcion
 #define EXECUTE_TIME 1500 // tiempo minimo a considerar como 'ejecutar' opcion actual
 
-#define BLINK_PERIOD 500 // periodo de parpadeo en ms
-#define BLINK_REPEAT 10 // cantidad de repeticiones de parpadeo
-
 // definit GPIO a utilizar como salida del led
 #define LED_PORT LD2_GPIO_Port
 #define LED_PIN LD2_Pin
 
+//// Parametros blinky por default
+#define BLINK_PERIOD_DEFAULT 500 // periodo de parpadeo en ms
+#define BLINK_REPEAT_DEFAULT 10 // cantidad de repeticiones de parpadeo
+//// Max y min parametros blinky
+#define BLINK_PERIOD_MAX 2000
+#define BLINK_PERIOD_MIN 100
+#define BLINK_REPEAT_MAX 20
+#define BLINK_REPEAT_MIN 1
+
 #define OPTION_OFFSET 6 // diferencia entre OPTION_x y EXECUTE_x
+
 // tipo de datos de opciones disponibles
 typedef enum{OPTION_1,OPTION_2,OPTION_3,OPTION_4,OPTION_5,OPTION_6,
 				EXECUTE_1,EXECUTE_2, EXECUTE_3, EXECUTE_4, EXECUTE_5, EXECUTE_6} option_t;
 
-// tipo de datos de ejecuciones disponibles
-//typedef enum{EXECUTING_1,EXECUTING_2,EXECUTING_3,EXECUTING_4,EXECUTING_5,EXECUTING_6, IDLE} execute_t;
-//typedef enum{EXECUTE, IDLE} execute_t;
+//uint8_t optionText[12][20] = {"OPCION 1", "OPCION 2", "OPCION 3", "OPCION 4", "OPCION 5", "OPCION 6",
+//				"EJECUTANDO 1", "EJECUTANDO 2", "EJECUTANDO 3", "EJECUTANDO 4", "EJECUTANDO 5", "EJECUTANDO 6"};
+
 // tipo de datos de la accion resultante del pulsador
 typedef enum{NONE, NEXT, BACK, EXECUTE, STOP} action_t;
+
 // tipo de dato para llevar la contabilidad del largo del pulso del boton
 typedef struct{
 	uint32_t startTime; // inicio del temporizado para asignar HAL_getTick() en flanco descendente
@@ -79,5 +87,7 @@ void blink_stop(GPIO_TypeDef * port, uint16_t pin);
 void motor_stop();
 
 void menuMEF_user_input();
+
+uint16_t get_value(uint16_t min, uint16_t max, uint16_t defaultValue);
 
 #endif /* API_INC_API_MENUMEF_H_ */

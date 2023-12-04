@@ -31,7 +31,7 @@ bool_t uartInit(){
 
 	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
 		//print_uart_config(uartHandle); // imprimir configuracion si la config fue exitosa
-		uartSendString("\r\n**************************** INICIO ****************************\r\n");
+		uartSendString("\r\nUART inicializada\r\n");
 		returnFlag = true;
 	}
 
@@ -70,7 +70,7 @@ void uartSendStringSize(uint8_t * pstring, uint16_t size){
 	}
 }
 
-/* > Descripcion: recibe una cantidad de caracteres contenidas en un string por la uart y las almacena en el buffer <pstring>
+/* > Descripcion: recibe una cantidad de caracteres por la uart y las almacena en el buffer <pstring>
  * > Parametro: <pstring> puntero del tipo uint8_t / <size> cantidad de caracteres a recibir rango [1-2^16]
  * > 			El buffer de recepcion tendra una cantidad maxima de caracteres definida en <RECEIVE_BUFFER_MAX_SIZE>
  * > Retorno: ninguno
@@ -89,6 +89,28 @@ void uartReceiveStringSize(uint8_t * pstring, uint16_t size){
 
 	*(pstring+index) = '\0'; // agregar el NULL al final para conformar el string
 }
+
+/* > Descripcion: recibe una cantidad de caracteres por la uart y las almacena en el buffer <pstring>
+ * 				  y detiene la coleccion de caracteres al encontrarse un '\r' (se ha presionado ENTER)
+ * > Parametro: <pstring> puntero del tipo uint8_t / <size> tamano del buffer de recepcion
+ * > 			El buffer de recepcion tendra una cantidad maxima de caracteres definida en <RECEIVE_BUFFER_MAX_SIZE>
+ * > Retorno: ninguno
+ */
+void uartReceiveString(uint8_t * pstring, uint16_t size){
+	if(size > RECEIVE_BUFFER_MAX_SIZE) size = RECEIVE_BUFFER_MAX_SIZE;
+	if(size < 1 ) size = 1;
+
+	uint16_t index = 0;
+	while(1){
+		HAL_UART_Receive(&uartHandle, (pstring+index), 1, HAL_MAX_DELAY); // recibir y esperar cada caracter hasta <size>
+		if( (index == size) ||  ( (*(pstring+index)) == '\r') ) break; // finalizar while al alzancar la cant de caracteres indicada
+		HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 10);
+		index++;
+	}
+
+	*(pstring+index) = '\0'; // agregar el NULL al final para conformar el string
+}
+
 
 /* > Descripcion: imprime a la terminal serie la configuracion de la UART
  * > Parametro: <uart> handler de la uart

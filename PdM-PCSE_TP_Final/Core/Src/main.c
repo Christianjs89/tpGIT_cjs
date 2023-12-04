@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "API_debounce.h" // nueva libreria API Practica 4 P2
+//#include "API_debounce.h" // nueva libreria API Practica 4 P2
 #include "API_menuMEF.h"
 /* USER CODE END Includes */
 
@@ -43,7 +43,7 @@
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
 
-UART_HandleTypeDef huart2;
+//UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 //delay_t delayHandle; // delay para controlar el temporizado de parpadeos
@@ -99,59 +99,24 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   //MX_USART2_UART_Init();
-  MX_I2C1_Init();
+  //MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   uartInit();
+  i2c_init();
+
   debounceFSM_init();
   menuMEF_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //delayInit(&delayHandle, delays[0]);
-  //uint8_t option = 0; // comenzar con la primer opcion de delay
-  //uint8_t sendBuffer[32];
   action_t menuAction = NONE;
-
 
   while(1){
 
-	  // checkear el estado del pulsador y actualizar el valor que lee readKey() >> deteccion flanco descendente
-	  debounceFSM_update();
-	  menuAction = menuMEF_update();
-	  menuMEF_set_state(menuAction);
-
-
-//	  if(readKey_down() == true){
-//		  // comenzar conteo
-//		  timeStart = HAL_GetTick(); // tiempo desde boton presionado
-//	  }
-//
-//	  if(readKey_up() == true){
-//		  // terminar conteo y pasar de opcion o ejecutarla
-//		  timeStop = HAL_GetTick(); // tiempo desde boton presionado
-//		  deltaTime = timeStop - timeStart; // if stop>start
-//		  if(deltaTime < 500){
-//			  command = NEXT;
-//		  } else if (deltaTime > 1500){
-//			  command = EXECUTE;
-//		  } else{
-//			  command = NONE;
-//		  }
-//	  }
-
-
-//	  if(menuAction == NEXT){
-//		  //sprintf(sendBuffer, "dt= %d ms >> NEXT\r\n", deltaTime);
-//		  uartSendString("NEXT\r\n");
-//		  //command = NONE;
-//	  }
-//	  if(menuAction == EXECUTE){
-//		  //sprintf(sendBuffer, "dt= %d ms >> EXECUTE\r\n", deltaTime);
-//		  uartSendString("EXECUTE\r\n");
-//		  //command = NONE;
-//	  }
-
+	  debounceFSM_update(); // checkear el estado del pulsador y actualizar su valor
+	  menuAction = menuMEF_update(); // obtener la accion del pulsador (NONE, EXECUTE, NEXT)
+	  menuMEF_set_state(menuAction); // ejecutar la accion correspondiente al estado y a la accion del pulsador
 
     /* USER CODE END WHILE */
 
@@ -200,34 +165,34 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-static void MX_I2C1_Init(void)
-{
-
-  /* USER CODE BEGIN I2C1_Init 0 */
-
-  /* USER CODE END I2C1_Init 0 */
-
-  /* USER CODE BEGIN I2C1_Init 1 */
-
-  /* USER CODE END I2C1_Init 1 */
-  hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
-  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1 = 0;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C1_Init 2 */
-
-  /* USER CODE END I2C1_Init 2 */
-
-}
+//static void MX_I2C1_Init(void)
+//{
+//
+//  /* USER CODE BEGIN I2C1_Init 0 */
+//
+//  /* USER CODE END I2C1_Init 0 */
+//
+//  /* USER CODE BEGIN I2C1_Init 1 */
+//
+//  /* USER CODE END I2C1_Init 1 */
+//  hi2c1.Instance = I2C1;
+//  hi2c1.Init.ClockSpeed = 100000;
+//  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+//  hi2c1.Init.OwnAddress1 = 0;
+//  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+//  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+//  hi2c1.Init.OwnAddress2 = 0;
+//  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+//  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+//  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN I2C1_Init 2 */
+//
+//  /* USER CODE END I2C1_Init 2 */
+//
+//}
 
 /**
   * @brief USART2 Initialization Function
@@ -238,11 +203,11 @@ static void MX_I2C1_Init(void)
 //{
 //
 //  /* USER CODE BEGIN USART2_Init 0 */
-////
+//////
 //  /* USER CODE END USART2_Init 0 */
 //
 //  /* USER CODE BEGIN USART2_Init 1 */
-////
+//////
 //  /* USER CODE END USART2_Init 1 */
 //  huart2.Instance = USART2;
 //  huart2.Init.BaudRate = 115200;
@@ -257,7 +222,7 @@ static void MX_I2C1_Init(void)
 //    Error_Handler();
 //  }
 //  /* USER CODE BEGIN USART2_Init 2 */
-////
+//////
 //  /* USER CODE END USART2_Init 2 */
 //
 //}
