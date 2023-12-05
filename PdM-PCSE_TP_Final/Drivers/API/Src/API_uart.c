@@ -31,7 +31,6 @@ bool_t uartInit(){
 
 	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
 		//print_uart_config(uartHandle); // imprimir configuracion si la config fue exitosa
-		uartSendString("\r\nUART inicializada\r\n");
 		returnFlag = true;
 	}
 

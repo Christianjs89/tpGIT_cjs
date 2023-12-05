@@ -21,8 +21,8 @@ static delay_t delayBlinkHandle; // handle para el delay de parpadeos
 static uint16_t blinkPeriod = BLINK_PERIOD_DEFAULT; // almacena el valor del periodo
 static uint16_t blinkRepeat = BLINK_REPEAT_DEFAULT; // almacena el valor de las repeticiones
 
-static uint8_t optionText[12][16] = {"OPCION 1       ", "OPCION 2       ", "OPCION 3       ", "OPCION 4       ", "OPCION 5       ", "OPCION 6       ",
-				"EJECUTANDO 1   ", "EJECUTANDO 2   ", "EJECUTANDO 3   ", "EJECUTANDO 4   ", "EJECUTANDO 5   ", "EJECUTANDO 6   "};
+static uint8_t optionText[13][16] = {"1-LED ON       ", "2-LED OFF      ", "3-BLINK LED    ", "4-MOTOR CW+    ", "5-MOTOR CCW-   ", "6-FREE         ",
+				"EJECUTANDO_1   ", "EJECUTANDO_2   ", "EJECUTANDO_3   ", "EJECUTANDO_4   ", "EJECUTANDO_5   ", "EJECUTANDO_6   "};
 
 void menuMEF_init(){
 	pulseHandle.nextTime = NEXT_TIME;
@@ -47,12 +47,14 @@ void menuMEF_init(){
 //	}
 
 	// Mostrar comienzo en terminal
-	uartSendString("\r\n**************************************************\r\n");
-	uartSendString("*************** Comienzo MENU MEF ****************\r\n");
-	uartSendString("Opcion 1\r\n");
+
+	uartSendString("\r\n*************** Comienzo MENU MEF ****************\r\n");
+	uint8_t buffer[32];
+	sprintf(buffer, "%s\r\n", optionText[currentState]);
+	uartSendString(buffer);
 
 	lcd_set_position(2, 1);
-	lcd_print_text(optionText[OPTION_1], sizeof(optionText)/sizeof(optionText[0]));
+	lcd_print_text(optionText[currentState], sizeof(optionText)/sizeof(optionText[0]));
 
 }
 
@@ -81,6 +83,7 @@ action_t menuMEF_update(void){
 			}
 		} else{
 			command = STOP;
+			uartSendString("STOP\r\n");
 		}
 	}
 	return command;
@@ -101,36 +104,40 @@ void menuMEF_set_state(action_t command){
 			currentState++; // avanzar a la siguiente opcion
 		}
 	}
+
+	if(command == EXECUTE){
+		currentState = currentState + OPTION_OFFSET; // pasar a estado EXECUTE_x
+	}
 	// si hubo un pulso indicando NEXT o EXECUTE, actualizar LCD y ejecutar la rutina correspondiente
 	// actualizar solo cuando hay un cambio
 	if((command == EXECUTE) || (command == NEXT)){
 		menuMEF_update_display(command); // actualizar display LCD
 	}
-	if(command == EXECUTE){
-		currentState = currentState + OPTION_OFFSET; // pasar a estado EXECUTE_x
-	}
 	menuMEF_execute(currentState); // iniciar/continuar rutina si corresponde
 }
 
 void menuMEF_update_display( action_t command){
-	char buffer[16];
+	char buffer[32];
 	// Escribir al LCD
 	if((command == NEXT) || (command == BACK)){
 		// enviar estado actual 'Opcion x' al LCD
-		sprintf(buffer, "Opcion %d\r\n", currentState+1);
+		//sprintf(buffer, "Opcion %d\r\n", currentState+1);
+		sprintf(buffer, "%s\r\n", optionText[currentState]);
 		uartSendString(buffer);
 
 		lcd_set_position(2, 1);
 		lcd_print_text(optionText[currentState], sizeof(optionText)/sizeof(optionText[0]));
+
 	}
 	if(command == EXECUTE){
 		// enviar estado actual 'Ejecutando x' al LCD
-		sprintf(buffer, "Ejecutando %d\r\n", currentState+1);
+		//sprintf(buffer, "Ejecutando %d\r\n", currentState+1);
+		sprintf(buffer, "%s\r\n", optionText[currentState]);
 		uartSendString(buffer);
 
 		lcd_set_position(2, 1);
 		//lcd_print_text(optionText[currentState+OPTION_OFFSET], sizeof(optionText)/sizeof(optionText[0]));
-		lcd_print_text("EJECUTANDO 3", 13);
+		lcd_print_text(optionText[currentState], sizeof(optionText)/sizeof(optionText[0]));
 	}
 
 }
@@ -233,12 +240,13 @@ void motor_stop(){
 }
 
 void menuMEF_user_input(){
-	uint8_t intro[] = "Ingrese a continuacion los parametros del parpadeo del led en ms"
-			"\r\nO presione ENTER para utilizar el valor en []\r\n\r\n";
+	uint8_t intro[] = "######################### COMIENZO DEL PROGRAMA #########################\r\n"
+			      "# Ingrese a continuacion los parametros del parpadeo del led en ms\r\n"
+				  "# Presione ENTER para utilizar [valor] por defecto:\r\n";
 	uint8_t periodPrompt[64];
 	uint8_t repeatPrompt[64];
-	sprintf(periodPrompt,"[%d-%d] Ingrese el Periodo [%d]: ", BLINK_PERIOD_MIN, BLINK_PERIOD_MAX, blinkPeriod);
-	sprintf(repeatPrompt,"[%d-%d]Ingrese las repeticiones [%d]: ", BLINK_REPEAT_MIN, BLINK_REPEAT_MAX, blinkRepeat);
+	sprintf(periodPrompt,"# [%d-%d] Ingrese el Periodo [%d]: ", BLINK_PERIOD_MIN, BLINK_PERIOD_MAX, blinkPeriod);
+	sprintf(repeatPrompt,"# [%d-%d]Ingrese las repeticiones [%d]: ", BLINK_REPEAT_MIN, BLINK_REPEAT_MAX, blinkRepeat);
 
 	uartSendString(intro);
 
@@ -249,8 +257,11 @@ void menuMEF_user_input(){
 	blinkRepeat = get_value(BLINK_REPEAT_MIN, BLINK_REPEAT_MAX, BLINK_REPEAT_DEFAULT);
 
 	uint8_t parameters[64];
-	sprintf(parameters,"Parametros blinky: periodo [%d], Repecitiones [%d]\r\n-*-*-*-*\r\n", blinkPeriod, blinkRepeat );
+	sprintf(parameters,"# Parametros blinky: periodo [%d], Repecitiones [%d]\r\n", blinkPeriod, blinkRepeat );
 	uartSendString(parameters);
+
+	uint8_t end[] = "#########################################################################\r\n";
+	uartSendString(end);
 }
 
 
@@ -271,7 +282,7 @@ uint16_t get_value(uint16_t min, uint16_t max, uint16_t defaultValue){
 		if( (value <= max) & (value >= min) ){
 			break;
 		} else{
-			uartSendString("\r\nValor fuera de rango!\r\nIngresar nuevamente: ");
+			uartSendString("\r\n# Valor fuera de rango!\r\nIngresar nuevamente: ");
 		}
 	}
 	return value;

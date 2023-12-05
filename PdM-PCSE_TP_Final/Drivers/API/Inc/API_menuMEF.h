@@ -15,8 +15,8 @@
 #include "stdio.h"
 
 // tiempos de pulso
-#define NEXT_TIME 500 // tiempo maximo a considerar como 'avance' de opcion
-#define EXECUTE_TIME 1500 // tiempo minimo a considerar como 'ejecutar' opcion actual
+#define NEXT_TIME 500 // T0 tiempo maximo a considerar como 'avance' de opcion
+#define EXECUTE_TIME 1000 // T1 tiempo minimo a considerar como 'ejecutar' opcion actual
 
 // definit GPIO a utilizar como salida del led
 #define LED_PORT LD2_GPIO_Port
@@ -37,9 +37,6 @@
 typedef enum{OPTION_1,OPTION_2,OPTION_3,OPTION_4,OPTION_5,OPTION_6,
 				EXECUTE_1,EXECUTE_2, EXECUTE_3, EXECUTE_4, EXECUTE_5, EXECUTE_6} option_t;
 
-//uint8_t optionText[12][20] = {"OPCION 1", "OPCION 2", "OPCION 3", "OPCION 4", "OPCION 5", "OPCION 6",
-//				"EJECUTANDO 1", "EJECUTANDO 2", "EJECUTANDO 3", "EJECUTANDO 4", "EJECUTANDO 5", "EJECUTANDO 6"};
-
 // tipo de datos de la accion resultante del pulsador
 typedef enum{NONE, NEXT, BACK, EXECUTE, STOP} action_t;
 
@@ -56,10 +53,6 @@ typedef struct{
 // [ms] tiempo de pulsado maximo que corresponde al avance a la siguiente opcion Rango[20,1000]
 // [ms] tiempo de pulsado minimo que corresponde a la ejecucion de la opcion selecctionada actual Rango[1000,5000]
 void pulse_config(uint16_t nextTime, uint16_t executeTime);
-
-// funcion para efectuar el tracking del pulsador
-// retorna la accion que corresponda a la duracion del pulso
-//action_t button_track();
 
 // Inicializacion del menu MEF
 void menuMEF_init();
