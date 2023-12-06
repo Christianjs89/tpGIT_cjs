@@ -107,46 +107,17 @@ int main(void)
   /* USER CODE BEGIN 2 */
   uartInit();
   i2c_init();
+  motor_init();
   timer_init();
 
   debounceFSM_init();
   menuMEF_init();
-  motor_init();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  action_t menuAction = NONE;
-
-
-  // stepper
-//  HAL_GPIO_WritePin(LED_PORT, LED_PIN, SET);
-//
-//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, RESET); // enable driver
-//  HAL_GPIO_WritePin(DIRECTION_GPIO_Port, DIRECTION_Pin, SET); // change direction
-//
-//  HAL_TIM_OC_Start(&htim2, TIM_CHANNEL_1); // Start STEP signal >> counter toggle to toggle every 20/1000 sec = 50hz
-//  HAL_Delay(60000); // run for 60 seconds
-//
-//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, SET); // disable driver
-//  HAL_TIM_OC_Stop(&htim2, TIM_CHANNEL_1); // stop timer
-//
-//  HAL_GPIO_WritePin(LED_PORT, LED_PIN, RESET);
-
-//  HAL_Delay(5000); // run for 5 seconds
-//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, SET); // disable driver > stop
-//  HAL_Delay(1000); // parar 1 seg
-//  HAL_GPIO_WritePin(DIRECTION_GPIO_Port, DIRECTION_Pin, RESET); // change direction
-//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, RESET); // enable driver
-//  HAL_Delay(5000); // run for 5 seconds
-//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, SET); // disable driver > stop
-//
-//  HAL_TIM_OC_Stop(&htim2, TIM_CHANNEL_1); // stop timer
-//  HAL_GPIO_WritePin(LED_PORT, LED_PIN, RESET); // disable driver
-
-  //HAL_TIM_Base_Start_IT(&htim3); // start timer for 10 sec w/interrupt
-
-
+  action_t menuAction = NONE; // inicializa la accion del menu en "ninguna accion"
 
   while(1){
 
