@@ -142,4 +142,6 @@ void menuMEF_user_input();
 // Retorno: retorna el numero entero uint16_6 ingresado
 uint16_t get_value(uint16_t min, uint16_t max, uint16_t defaultValue);
 
+void free_routine(); // placeholder > opcion 6 a incorporar a futuro > animacion provisoria
+
 #endif /* API_INC_API_MENUMEF_H_ */

@@ -28,6 +28,12 @@ static I2C_HandleTypeDef i2cHandle; // bring all the i2c config from main.c here
 /* Serial->Parallel: output Byte Px: D7 D6 D5 D4 BT E RW RS */
 
 
+// send a byte to the LCD / chose RS_COMMAND/RS_DATA, RW_READ/RW_WRITE
+// Envia un byte de dato/comando al LCD
+// Parametros:
+// <rs> tipo de byte de comando o instruccion
+// <RW> tipo de comunicacion con el LCD (lectura/escritura
+// Retorno: ninguno
 void lcd_send_byte(uint8_t byte, bool rs, bool rw){
 	// byte contains 8 bits of information  / byteType can be INSTRUCTION or DATA
 	uint8_t upperByte = (byte & HIGH_NIBBLE); // mask with 1111 0000
@@ -50,19 +56,36 @@ void lcd_send_byte(uint8_t byte, bool rs, bool rw){
 
 }
 
+// send bytes over I2C / specify if it's a READ/WRITE operation
+// Envia un byte por I2C, especificando si la instruccion es de lectura o escritura al modulo I2C
+// Parametros: <slaveAddress> direccion del modulo I2C (7 bits)
+// <byteSequence> vector con los bytes a transmitir
+// <sequenceSize> tamano del vector con bytes a transmitir
+// <i2c_rw> modo de comunicacion read/write al al modulo I2C
+// Retorno: ninguno
 void send_bytes_i2c(uint8_t slaveAddress, uint8_t byteSequence[], uint8_t sequenceSize, bool i2c_rw){
 	slaveAddress = ((slaveAddress<<1) | i2c_rw); // i2c WRITE or READ
 	HAL_I2C_Master_Transmit(&i2cHandle, slaveAddress, byteSequence, sequenceSize, 100);
 }
 
+// Despeja la pantalla LCD por completo
+// Parametros: ninguno
+// Retorno: ninguno
 void lcd_clear(){
 	lcd_send_byte(0x01, RS_INSTRUCTION, RW_WRITE);
 }
 
+// Posicionar el cursor en la posicion 0,0 del LCD
+// Parametros: ninguno
+// Retorno: ninguno
 void return_home(){
 	lcd_send_byte(0x02, RS_INSTRUCTION, RW_WRITE);
 }
 
+
+// Posiciona el cursor del LCD en la fila y columna seleccionada
+// Parametros: <row> fila [1,2] , <column> columna [1,16]
+// Retorno: ninguno
 void lcd_set_position(uint8_t row, uint8_t column){
 	// for LCD 16x2 check ranges
 	if(row>2) row = 2;
@@ -72,10 +95,14 @@ void lcd_set_position(uint8_t row, uint8_t column){
 
 	uint8_t ddram = ddram_address_16x2[row-1][column-1];
 	uint8_t ddram_cmd = ddram | (1<<7); // add a 1 in DB7 for DDRAM command
-
 	lcd_send_byte(ddram_cmd, RS_INSTRUCTION, RW_WRITE); // send address as instruction, not data
 }
 
+
+// Imprime un vector de caracteres al LCD a partir de la ultima posicion en uso
+// Utilizar en conjunto con lcd_set_position
+// Parametros: <text> vector de caracteres a imprimir , <size> tamano del vector de caracteres
+// Retorno: ninguno
 void lcd_print_text(uint8_t text[], uint8_t size){
 
 	for(uint8_t i = 0; i < size-1; i++){ // -1 to exclude the '/0' char
@@ -84,17 +111,31 @@ void lcd_print_text(uint8_t text[], uint8_t size){
 	}
 }
 
+
+// Control de la luz de fondo del LCD
+// Parametros: <state> 1-encendido 0-apagado
+// Retorno: ninguno
 void control_backlight(bool state){
 	uint8_t cmd = (state<<BT_POS); // send straight to I2C / not part of the LCD controller
 	uint8_t slaveAddress = ((LCD_ADDRESS<<1) | I2C_WRITE); // i2c WRITE or READ
 	HAL_I2C_Master_Transmit(&i2cHandle, slaveAddress, cmd, 1, 100);
 }
 
+
+// Desplazamiento del display y/o cursor
+// Cada llamado desplaza el cursor y/o display 1 espacio
+// Parametros: <shiftType> desplazamiento del cursor o display , <direction> a la izquierda or derecha
+// Retorno: ninguno
 void shift_display(bool shiftType, bool direction){ // DISPLAY_SHIFT / CURSOR_SHIFT - SHIFT_RIGHT / SHIFT_LEFT
 	uint8_t cmd = ((direction<<SHIFT_DIRECTION_POS)|(shiftType<<CURSOR_DISPLAY_SHIFT_POS));
 	lcd_send_byte(0x1C, 0, 0); // shift display to the right
 }
 
+
+// Creacion de un caracter nuevo en la memoria CGRAM del LCD
+// Parametros: <index> posicion en memoria donde almacenar el vector de 8 bytes del caracter [0,7]
+// <mychar> vector de 8 bytes correspondientes al caracter deseado a almacenar en la CGRAM
+// Retorno: ninguno
 void create_character(uint8_t index, uint8_t mychar[]){
 	// https://maxpromer.github.io/LCD-Character-Creator/
 	if(index<0) index = 0;
@@ -111,11 +152,17 @@ void create_character(uint8_t index, uint8_t mychar[]){
 
 }
 
-void lcd_print_custom_character(uint8_t customCharArray[], uint8_t index){
-	create_character(index, customCharArray);
-	lcd_send_byte(index, RS_DATA, RW_WRITE);
-}
 
+// Sin uso, debe enviarse el set_position luego de crear el caracter
+//void lcd_print_custom_character(uint8_t customCharArray[], uint8_t index){
+//	create_character(index, customCharArray);
+//	lcd_send_byte(index, RS_DATA, RW_WRITE);
+//}
+
+
+// Inicializacion del LCD de acuerdo con el proceso descripto en la hoja de datos
+// Parametros: ninguno
+// Retorno: ninguno
 void lcd_init(){
 	// initialization sequence p46 HD44780 datasheet
 	HAL_Delay(60); // wait >40 ms
@@ -143,10 +190,15 @@ void lcd_init(){
 	HAL_Delay(10);
 }
 
+// Vinculacion del handle de I2C en caso de crear el handle en main.c
+// Sin uso en el programa actual > handle local privado
 void i2c_linker(I2C_HandleTypeDef * i2cInstance){
 	i2cHandle = *i2cInstance;
 }
 
+// Inicializacion del periferico I2C1 configurado con CubeMX
+// Parametros: ninguno
+// Retorno: ninguno
 void i2c_init(void){
 
 	i2cHandle.Instance = I2C1;

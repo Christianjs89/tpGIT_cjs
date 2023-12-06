@@ -185,7 +185,7 @@ void menuMEF_execute(){
 		break;
 	case EXECUTE_6:
 		// ejecutar 6
-		// free
+		free_routine();
 		break;
 	default:
 		// no ejecutar nada
@@ -264,6 +264,45 @@ void blink_stop(GPIO_TypeDef * port, uint16_t pin){
 	menuMEF_reset_state();
 }
 
+
+
+void free_routine(){
+	// secuencia para la anumacion de una persona saltando en el LCD
+	uint8_t jumpingGuy[4][8] = {
+			{ 0x0E, 0x0A, 0x0E, 0x04, 0x0E, 0x15, 0x0A, 0x0A},
+			{ 0x0E, 0x0A, 0x0E, 0x04, 0x1F, 0x04, 0x0A, 0x11},
+			{ 0x0E, 0x0A, 0x0E, 0x15, 0x0E, 0x04, 0x1B, 0x00},
+			{ 0x0E, 0x0A, 0x1F, 0x15, 0x0E, 0x15, 0x0A, 0x00} };
+	// Campo en blanco
+	uint8_t blank[] = { 0,0,0,0,0,0,0,0};
+	executingRoutine = true;
+
+	uint8_t index = 0;
+	uint8_t count = 0;
+	bool direction = 1; // 1-up 0-down
+	// recorrer los cuadros de la animacion
+	while(1){
+		create_character(index, jumpingGuy[index]);
+		lcd_set_position(2, 15);
+		lcd_send_byte(index, RS_DATA, RW_WRITE);
+		HAL_Delay(200);
+		if(direction == 1){
+			index++;
+		} else{
+			index--;
+		}
+		count++;
+		if(index == 3) direction = 0; // contar para abajo
+		if(index == 0) direction = 1; // contar para arriba
+		if(count > 14) break;
+	}
+	// blanquear campo
+	create_character(0, blank);
+	lcd_set_position(2, 15);
+	lcd_send_byte(0, RS_DATA, RW_WRITE);
+	executingRoutine = false;
+	menuMEF_reset_state();
+}
 
 // Accionamiento del stepper motor (Haydon 36362-12 12V 4.6W) controlador por el DRV8825
 // Parametros: <command> instruccion de comando del motor tipo motorState_t (parada, giro horario y anti horario)
@@ -369,3 +408,5 @@ uint16_t get_value(uint16_t min, uint16_t max, uint16_t defaultValue){
 	}
 	return value;
 }
+
+

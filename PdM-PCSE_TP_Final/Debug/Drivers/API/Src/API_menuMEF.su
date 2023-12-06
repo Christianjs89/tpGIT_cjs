@@ -9,7 +9,8 @@
 ../Drivers/API/Src/API_menuMEF.c:224:6:led_off	16	static
 ../Drivers/API/Src/API_menuMEF.c:236:6:blink_led	24	static
 ../Drivers/API/Src/API_menuMEF.c:260:6:blink_stop	16	static
-../Drivers/API/Src/API_menuMEF.c:273:6:motor_run	16	static
-../Drivers/API/Src/API_menuMEF.c:290:6:motor_stop	8	static
-../Drivers/API/Src/API_menuMEF.c:301:6:menuMEF_user_input	728	static
-../Drivers/API/Src/API_menuMEF.c:350:10:get_value	32	static
+../Drivers/API/Src/API_menuMEF.c:269:6:free_routine	64	static
+../Drivers/API/Src/API_menuMEF.c:312:6:motor_run	16	static
+../Drivers/API/Src/API_menuMEF.c:329:6:motor_stop	8	static
+../Drivers/API/Src/API_menuMEF.c:340:6:menuMEF_user_input	728	static
+../Drivers/API/Src/API_menuMEF.c:389:10:get_value	32	static

@@ -3,6 +3,9 @@
  *
  *  Created on: Nov 15, 2023
  *      Author: chris
+ *
+ *      Libreria de LCD 16x2
+ *      Nota: comentarios en ingles para utilizacion en mi trabajo
  */
 
 #ifndef API_INC_API_LCD_I2C_H_
@@ -115,20 +118,75 @@ static const uint8_t ddram_address_16x2[2][16] = {
  * Write to char or strings to LCD, set position, initialize LCD, clear screen, control backlight
  * Enough time in between instructions is very important to execute all of them
  */
-void i2c_init(void); // I2C1 PB8/9 initialization
-void lcd_send_byte(uint8_t byte, bool rs, bool rw); // send a byte to the LCD / chose RS_COMMAND/RS_DATA, RW_READ/RW_WRITE
-void send_bytes_i2c(uint8_t slaveAddress, uint8_t byteSequence[], uint8_t sequenceSize, bool i2c_rw); // send bytes over I2C / specify if it's a READ/WRITE operation
-void lcd_print_custom_character(uint8_t customCharArray[], uint8_t index); // writes a custom character with the assigned memory location <index>
+
+// Inicializacion del periferico I2C1 configurado con CubeMX
+// Parametros: ninguno
+// Retorno: ninguno
+void i2c_init(void);
+
+// Envia un byte de dato/comando al LCD
+// Parametros:
+// <rs> tipo de byte de comando o instruccion
+// <RW> tipo de comunicacion con el LCD (lectura/escritura
+// Retorno: ninguno
+void lcd_send_byte(uint8_t byte, bool rs, bool rw);
+
+// Envia un byte por I2C, especificando si la instruccion es de lectura o escritura al modulo I2C
+// Parametros: <slaveAddress> direccion del modulo I2C (7 bits)
+// <byteSequence> vector con los bytes a transmitir
+// <sequenceSize> tamano del vector con bytes a transmitir
+// <i2c_rw> modo de comunicacion read/write al al modulo I2C
+// Retorno: ninguno
+void send_bytes_i2c(uint8_t slaveAddress, uint8_t byteSequence[], uint8_t sequenceSize, bool i2c_rw);
+
+// Inicializacion del LCD de acuerdo con el proceso descripto en la hoja de datos
+// Parametros: ninguno
+// Retorno: ninguno
 void lcd_init(); // LCD initialization for 16x2 I2c
+
+// Posiciona el cursor del LCD en la fila y columna seleccionada
+// Parametros: <row> fila [1,2] , <column> columna [1,16]
+// Retorno: ninguno
 void lcd_set_position(uint8_t row, uint8_t column); // set cursor before writing a new char [1-2,1-16]
+
+// Imprime un vector de caracteres al LCD a partir de la ultima posicion en uso
+// Utilizar en conjunto con lcd_set_position
+// Parametros: <text> vector de caracteres a imprimir , <size> tamano del vector de caracteres
+// Retorno: ninguno
 void lcd_print_text(uint8_t text[], uint8_t size); // print a string to the LCD
+
+// Despeja la pantalla LCD por completo
+// Parametros: ninguno
+// Retorno: ninguno
 void lcd_clear(); // clear LCD screen
+
+// Posicionar el cursor en la posicion 0,0 del LCD
+// Parametros: ninguno
+// Retorno: ninguno
 void return_home(); // move cursor to 1,1
+
+// Control de la luz de fondo del LCD
+// Parametros: <state> 1-encendido 0-apagado
+// Retorno: ninguno
 void control_backlight(bool state); // turn on/off backlight
+
+// Vinculacion del handle de I2C en caso de crear el handle en main.c
+// Sin uso en el programa actual > handle local privado
 void i2c_linker(I2C_HandleTypeDef * i2cInstance); // bring i2c handle from main / use AFTER MX_I2C1_Init();
+
+// Desplazamiento del display y/o cursor
+// Cada llamado desplaza el cursor y/o display 1 espacio
+// Parametros: <shiftType> desplazamiento del cursor o display , <direction> a la izquierda or derecha
+// Retorno: ninguno
 void shift_display(bool shiftType, bool direction);
+
+// Creacion de un caracter nuevo en la memoria CGRAM del LCD
+// Parametros: <index> posicion en memoria donde almacenar el vector de 8 bytes del caracter [0,7]
+// <mychar> vector de 8 bytes correspondientes al caracter deseado a almacenar en la CGRAM
+// Retorno: ninguno
 void create_character(uint8_t index, uint8_t mychar[]); // 0-7 storage index, 8 memory locations, array with character shape
 
+//void lcd_print_custom_character(uint8_t customCharArray[], uint8_t index); // writes a custom character with the assigned memory location <index>
 
 #endif /* API_INC_API_LCD_I2C_H_ */
 
