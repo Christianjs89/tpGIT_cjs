@@ -1,0 +1,4 @@
+../Drivers/API/Src/API_drv8825.c:20:6:motor_init	1
+../Drivers/API/Src/API_drv8825.c:28:6:motor_send_command	8
+../Drivers/API/Src/API_drv8825.c:92:6:motor_config	1
+../Drivers/API/Src/API_drv8825.c:97:6:timer_init	6

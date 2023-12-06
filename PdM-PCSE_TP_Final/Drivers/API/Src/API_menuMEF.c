@@ -6,8 +6,8 @@
  */
 
 #include "API_menuMEF.h"
-#include "API_delay.h"
-#include "API_lcd_i2c.h"
+//#include "API_delay.h"
+//#include "API_lcd_i2c.h"
 
 static option_t currentState; // tracking de la opcion actual
 
@@ -159,10 +159,16 @@ void menuMEF_execute(){
 		blink_led(LED_PORT, LED_PIN, blinkPeriod, blinkRepeat);
 		break;
 	case EXECUTE_4:
-		// ejecutar 4
+		// ejecutar 4 motor CW
+		motor_send_command(MOTOR_RUN_CW);
+		//HAL_Delay(5000);
+		menuMEF_reset_state();
 		break;
 	case EXECUTE_5:
-		// ejecutar 5
+		// ejecutar 5 motor CCW
+		motor_send_command(MOTOR_RUN_CCW);
+		//HAL_Delay(5000);
+		menuMEF_reset_state();
 		break;
 	case EXECUTE_6:
 		// ejecutar 6

@@ -7,6 +7,7 @@
 "./Core/Startup/startup_stm32f103rbtx.o"
 "./Drivers/API/Src/API_debounce.o"
 "./Drivers/API/Src/API_delay.o"
+"./Drivers/API/Src/API_drv8825.o"
 "./Drivers/API/Src/API_lcd_i2c.o"
 "./Drivers/API/Src/API_menuMEF.o"
 "./Drivers/API/Src/API_uart.o"

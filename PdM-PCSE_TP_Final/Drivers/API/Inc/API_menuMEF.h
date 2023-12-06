@@ -14,6 +14,11 @@
 #include "API_uart.h"
 #include "stdio.h"
 
+#include "API_delay.h"
+#include "API_lcd_i2c.h"
+
+#include "API_drv8825.h"
+
 // tiempos de pulso
 #define NEXT_TIME 500 // T0 tiempo maximo a considerar como 'avance' de opcion
 #define EXECUTE_TIME 1000 // T1 tiempo minimo a considerar como 'ejecutar' opcion actual

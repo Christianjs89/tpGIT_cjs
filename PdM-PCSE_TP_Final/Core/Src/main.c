@@ -41,7 +41,9 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c1;
+//I2C_HandleTypeDef hi2c1;
+
+//TIM_HandleTypeDef htim2;
 
 //UART_HandleTypeDef huart2;
 
@@ -57,7 +59,8 @@ I2C_HandleTypeDef hi2c1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 //static void MX_USART2_UART_Init(void);
-static void MX_I2C1_Init(void);
+//static void MX_I2C1_Init(void);
+//static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -100,17 +103,50 @@ int main(void)
   MX_GPIO_Init();
   //MX_USART2_UART_Init();
   //MX_I2C1_Init();
+  //MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   uartInit();
   i2c_init();
+  timer_init();
 
   debounceFSM_init();
   menuMEF_init();
+  motor_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   action_t menuAction = NONE;
+
+
+  // stepper
+//  HAL_GPIO_WritePin(LED_PORT, LED_PIN, SET);
+//
+//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, RESET); // enable driver
+//  HAL_GPIO_WritePin(DIRECTION_GPIO_Port, DIRECTION_Pin, SET); // change direction
+//
+//  HAL_TIM_OC_Start(&htim2, TIM_CHANNEL_1); // Start STEP signal >> counter toggle to toggle every 20/1000 sec = 50hz
+//  HAL_Delay(60000); // run for 60 seconds
+//
+//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, SET); // disable driver
+//  HAL_TIM_OC_Stop(&htim2, TIM_CHANNEL_1); // stop timer
+//
+//  HAL_GPIO_WritePin(LED_PORT, LED_PIN, RESET);
+
+//  HAL_Delay(5000); // run for 5 seconds
+//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, SET); // disable driver > stop
+//  HAL_Delay(1000); // parar 1 seg
+//  HAL_GPIO_WritePin(DIRECTION_GPIO_Port, DIRECTION_Pin, RESET); // change direction
+//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, RESET); // enable driver
+//  HAL_Delay(5000); // run for 5 seconds
+//  HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, SET); // disable driver > stop
+//
+//  HAL_TIM_OC_Stop(&htim2, TIM_CHANNEL_1); // stop timer
+//  HAL_GPIO_WritePin(LED_PORT, LED_PIN, RESET); // disable driver
+
+  //HAL_TIM_Base_Start_IT(&htim3); // start timer for 10 sec w/interrupt
+
+
 
   while(1){
 
@@ -169,11 +205,11 @@ void SystemClock_Config(void)
 //{
 //
 //  /* USER CODE BEGIN I2C1_Init 0 */
-//
+////////
 //  /* USER CODE END I2C1_Init 0 */
 //
 //  /* USER CODE BEGIN I2C1_Init 1 */
-//
+////////
 //  /* USER CODE END I2C1_Init 1 */
 //  hi2c1.Instance = I2C1;
 //  hi2c1.Init.ClockSpeed = 100000;
@@ -189,8 +225,67 @@ void SystemClock_Config(void)
 //    Error_Handler();
 //  }
 //  /* USER CODE BEGIN I2C1_Init 2 */
-//
+////////
 //  /* USER CODE END I2C1_Init 2 */
+//
+//}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+//static void MX_TIM2_Init(void)
+//{
+//
+//  /* USER CODE BEGIN TIM2_Init 0 */
+//
+//  /* USER CODE END TIM2_Init 0 */
+//
+//  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+//  TIM_MasterConfigTypeDef sMasterConfig = {0};
+//  TIM_OC_InitTypeDef sConfigOC = {0};
+//
+//  /* USER CODE BEGIN TIM2_Init 1 */
+//
+//  /* USER CODE END TIM2_Init 1 */
+//  htim2.Instance = TIM2;
+//  htim2.Init.Prescaler = 1000-1;
+//  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+//  htim2.Init.Period = 10-1;
+//  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+//  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+//  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+//  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  if (HAL_TIM_OC_Init(&htim2) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+//  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+//  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
+//  sConfigOC.Pulse = 0;
+//  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+//  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+//  if (HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN TIM2_Init 2 */
+//
+//  /* USER CODE END TIM2_Init 2 */
+//  HAL_TIM_MspPostInit(&htim2);
 //
 //}
 
@@ -203,11 +298,11 @@ void SystemClock_Config(void)
 //{
 //
 //  /* USER CODE BEGIN USART2_Init 0 */
-//////
+////////////
 //  /* USER CODE END USART2_Init 0 */
 //
 //  /* USER CODE BEGIN USART2_Init 1 */
-//////
+////////////
 //  /* USER CODE END USART2_Init 1 */
 //  huart2.Instance = USART2;
 //  huart2.Init.BaudRate = 115200;
@@ -222,7 +317,7 @@ void SystemClock_Config(void)
 //    Error_Handler();
 //  }
 //  /* USER CODE BEGIN USART2_Init 2 */
-//////
+////////////
 //  /* USER CODE END USART2_Init 2 */
 //
 //}
@@ -245,7 +340,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DIRECTION_Pin|ENABLE_Pin|LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -253,12 +348,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LD2_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin;
+  /*Configure GPIO pins : DIRECTION_Pin ENABLE_Pin LD2_Pin */
+  GPIO_InitStruct.Pin = DIRECTION_Pin|ENABLE_Pin|LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
