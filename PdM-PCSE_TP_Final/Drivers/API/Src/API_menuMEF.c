@@ -6,6 +6,7 @@
  */
 
 #include "API_menuMEF.h"
+#include "stdlib.h"
 //#include "API_delay.h"
 //#include "API_lcd_i2c.h"
 

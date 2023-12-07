@@ -1,0 +1,2 @@
+../Drivers/API/Src/port_i2c.c:17:6:i2c_init	8	static
+../Drivers/API/Src/port_i2c.c:35:6:i2c_transmit	32	static

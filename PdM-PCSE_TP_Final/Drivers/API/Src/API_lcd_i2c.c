@@ -65,7 +65,9 @@ void lcd_send_byte(uint8_t byte, bool rs, bool rw){
 // Retorno: ninguno
 void send_bytes_i2c(uint8_t slaveAddress, uint8_t byteSequence[], uint8_t sequenceSize, bool i2c_rw){
 	slaveAddress = ((slaveAddress<<1) | i2c_rw); // i2c WRITE or READ
-	HAL_I2C_Master_Transmit(&i2cHandle, slaveAddress, byteSequence, sequenceSize, 100);
+
+	i2c_transmit(slaveAddress, byteSequence, sequenceSize, 100); // port
+	// port HAL_I2C_Master_Transmit(&i2cHandle, slaveAddress, byteSequence, sequenceSize, 100);
 }
 
 // Despeja la pantalla LCD por completo
@@ -118,7 +120,9 @@ void lcd_print_text(uint8_t text[], uint8_t size){
 void control_backlight(bool state){
 	uint8_t cmd = (state<<BT_POS); // send straight to I2C / not part of the LCD controller
 	uint8_t slaveAddress = ((LCD_ADDRESS<<1) | I2C_WRITE); // i2c WRITE or READ
-	HAL_I2C_Master_Transmit(&i2cHandle, slaveAddress, cmd, 1, 100);
+
+	i2c_transmit(slaveAddress, cmd, 1, 100); // port
+	// port HAL_I2C_Master_Transmit(&i2cHandle, slaveAddress, cmd, 1, 100);
 }
 
 
@@ -196,22 +200,22 @@ void i2c_linker(I2C_HandleTypeDef * i2cInstance){
 	i2cHandle = *i2cInstance;
 }
 
-// Inicializacion del periferico I2C1 configurado con CubeMX
-// Parametros: ninguno
-// Retorno: ninguno
-void i2c_init(void){
-
-	i2cHandle.Instance = I2C1;
-	i2cHandle.Init.ClockSpeed = 100000;
-	i2cHandle.Init.DutyCycle = I2C_DUTYCYCLE_2;
-	i2cHandle.Init.OwnAddress1 = 0;
-	i2cHandle.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-	i2cHandle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-	i2cHandle.Init.OwnAddress2 = 0;
-	i2cHandle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-	i2cHandle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&i2cHandle) != HAL_OK)
-  {
-    //Error_Handler();
-  }
-}
+//// Inicializacion del periferico I2C1 configurado con CubeMX
+//// Parametros: ninguno
+//// Retorno: ninguno
+//void i2c_init(void){
+//
+//	i2cHandle.Instance = I2C1;
+//	i2cHandle.Init.ClockSpeed = 100000;
+//	i2cHandle.Init.DutyCycle = I2C_DUTYCYCLE_2;
+//	i2cHandle.Init.OwnAddress1 = 0;
+//	i2cHandle.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+//	i2cHandle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+//	i2cHandle.Init.OwnAddress2 = 0;
+//	i2cHandle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+//	i2cHandle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+//  if (HAL_I2C_Init(&i2cHandle) != HAL_OK)
+//  {
+//    //Error_Handler();
+//  }
+//}

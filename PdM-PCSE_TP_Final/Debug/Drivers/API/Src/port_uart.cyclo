@@ -1,0 +1,3 @@
+../Drivers/API/Src/port_uart.c:21:8:uartInit	2
+../Drivers/API/Src/port_uart.c:42:6:uart_transmit	1
+../Drivers/API/Src/port_uart.c:46:6:uart_receive	1

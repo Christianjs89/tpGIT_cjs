@@ -8,34 +8,35 @@
 #include "API_uart.h"
 #include "stdio.h"
 /* DECLARACION DE VARIABLES */
-static UART_HandleTypeDef uartHandle; // handle de la uart con la configuracion y estado del periferico.
+//port static UART_HandleTypeDef uartHandle; // handle de la uart con la configuracion y estado del periferico.
 
 /* DEFINICION DE FUNCIONES */
 
+// port
 /* > Descripcion: Inicializa la uart con la configuracion preestablecida y envia dicha config a la terminal
  * > Parametro: ninguno
  * > Retorno: retorna un boolt_t true en caso exito o false caso contrario
  */
-bool_t uartInit(){
-	// uartHandle >> estructura de dato UART_HandleTypeDef declarada en API_uart.h
-	bool_t returnFlag = false;
-
-	uartHandle.Instance = USE_USART; // instancia de la uart >> usb conectado a usart2
-	uartHandle.Init.BaudRate = 9600; // baudrate tipico
-	uartHandle.Init.WordLength = UART_WORDLENGTH_8B; // tamano de los datos >> 8 bits
-	uartHandle.Init.StopBits = UART_STOPBITS_1; // cantidad de stop bits >> 1 solo
-	uartHandle.Init.Parity = UART_PARITY_NONE; // tipo de paridad >> ninguno
-	uartHandle.Init.Mode = UART_MODE_TX_RX; // modo recepcion/recepcion habilitado
-	uartHandle.Init.HwFlowCtl = UART_HWCONTROL_NONE; // sin control de flujo por hardware
-	uartHandle.Init.OverSampling = UART_OVERSAMPLING_16; // cantidad de muestras por tiempo de bit
-
-	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
-		//print_uart_config(uartHandle); // imprimir configuracion si la config fue exitosa
-		returnFlag = true;
-	}
-
-	return returnFlag;
-}
+//bool_t uartInit(){
+//	// uartHandle >> estructura de dato UART_HandleTypeDef declarada en API_uart.h
+//	bool_t returnFlag = false;
+//
+//	uartHandle.Instance = USE_USART; // instancia de la uart >> usb conectado a usart2
+//	uartHandle.Init.BaudRate = 9600; // baudrate tipico
+//	uartHandle.Init.WordLength = UART_WORDLENGTH_8B; // tamano de los datos >> 8 bits
+//	uartHandle.Init.StopBits = UART_STOPBITS_1; // cantidad de stop bits >> 1 solo
+//	uartHandle.Init.Parity = UART_PARITY_NONE; // tipo de paridad >> ninguno
+//	uartHandle.Init.Mode = UART_MODE_TX_RX; // modo recepcion/recepcion habilitado
+//	uartHandle.Init.HwFlowCtl = UART_HWCONTROL_NONE; // sin control de flujo por hardware
+//	uartHandle.Init.OverSampling = UART_OVERSAMPLING_16; // cantidad de muestras por tiempo de bit
+//
+//	if (HAL_UART_Init(&uartHandle) == HAL_OK){ // retornar true si es exitosa la configuracion
+//		//print_uart_config(uartHandle); // imprimir configuracion si la config fue exitosa
+//		returnFlag = true;
+//	}
+//
+//	return returnFlag;
+//}
 
 /* > Descripcion: envia un string (buffer <pstring>) por la uart, finalizando en el caracter NULL
  * > Parametro: <pstring> puntero del tipo uint8_t
@@ -47,7 +48,8 @@ void uartSendString(uint8_t * pstring){
 	uint16_t index = 0; // indice para recorrer array pstring, admite hasta 2^16 caracteres
 	while(1){
 		if( (*(pstring+index) == '\0') || (index > SEND_BUFFER_MAX_SIZE) ) break; // al encontrarse el NULL salir de funcion
-		HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 100); // enviar caracter x caracter
+		uart_transmit((pstring+index), 1, 100); //port
+		//port HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 100); // enviar caracter x caracter
 		index++;
 	}
 }
@@ -64,7 +66,8 @@ void uartSendStringSize(uint8_t * pstring, uint16_t size){
 	uint16_t index = 0;
 	while(1){
 		if(( *(pstring+index) == '\0') || (index == size) ) break; // finalizar while al encontrar NULL o alzancar la cant de caracteres indicada
-		HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 100); // enviar caracter x caracter
+		uart_transmit((pstring+index), 1, 100); //port
+		//port HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 100); // enviar caracter x caracter
 		index++;
 	}
 }
@@ -82,7 +85,8 @@ void uartReceiveStringSize(uint8_t * pstring, uint16_t size){
 	uint16_t index = 0;
 	while(1){
 		if( index == size ) break; // finalizar while al alzancar la cant de caracteres indicada
-		HAL_UART_Receive(&uartHandle, (pstring+index), 1, HAL_MAX_DELAY); // recibir y esperar cada caracter hasta <size>
+		uart_transmit((pstring+index), 1, HAL_MAX_DELAY); //port
+		//port HAL_UART_Receive(&uartHandle, (pstring+index), 1, HAL_MAX_DELAY); // recibir y esperar cada caracter hasta <size>
 		index++;
 	}
 
@@ -101,9 +105,11 @@ void uartReceiveString(uint8_t * pstring, uint16_t size){
 
 	uint16_t index = 0;
 	while(1){
-		HAL_UART_Receive(&uartHandle, (pstring+index), 1, HAL_MAX_DELAY); // recibir y esperar cada caracter hasta <size>
+		uart_receive((pstring+index), 1, HAL_MAX_DELAY); // port
+		//port HAL_UART_Receive(&uartHandle, (pstring+index), 1, HAL_MAX_DELAY); // recibir y esperar cada caracter hasta <size>
 		if( (index == size) ||  ( (*(pstring+index)) == '\r') ) break; // finalizar while al alzancar la cant de caracteres indicada
-		HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 10);
+		uart_transmit((pstring+index), 1, 10); //port
+		//port HAL_UART_Transmit(&uartHandle, (pstring+index), 1, 10);
 		index++;
 	}
 
