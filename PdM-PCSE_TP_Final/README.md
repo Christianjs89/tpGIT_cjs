@@ -51,3 +51,46 @@ El motor paso a paso de 12V 4W es controlado por medio del integrado DRV8825, el
 **Maquina de Estados Finitos**  
 
 <img width="960" alt="MEF" src="https://github.com/Christianjs89/tpGIT_cjs/assets/62712067/f6e6b3dd-71a5-4e95-a916-84c12de70752">
+
+
+### Ejemplo de salida por el terminal serie
+```
+######################### COMIENZO DEL PROGRAMA #########################
+# Ingrese a continuacion los parametros del parpadeo del led en ms
+# Presione ENTER para utilizar [valor] por defecto:
+# [100-2000] Periodo [500]:
+# [1-20] Repeticiones [10]:
+#
+# Ingrese a continuacion los parametros del motor ms
+# Presione ENTER para utilizar [valor] por defecto:
+# [2000-20000] Temporizado [10000]: 5000
+# [1-150] Frecuencia [20]:
+# Parametros blinky: PERRIODO [500], REPETIICIONES [10]
+# Parametros motor: TEMPORIZADO [5000], FRECUENCIA [20]
+#########################################################################
+
+*************** Comienzo MENU MEF ****************
+1-LED ON
+EXECUTE
+EJECUTANDO_1
+1-LED ON
+NEXT
+2-LED OFF
+EXECUTE
+EJECUTANDO_2
+2-LED OFF
+NEXT
+3-BLINK LED
+EXECUTE
+EJECUTANDO_3
+3-BLINK LED
+NEXT
+4-MOTOR CW+
+EXECUTE
+EJECUTANDO_4
+4-MOTOR CW+
+NEXT
+5-MOTOR CCW-
+EXECUTE
+EJECUTANDO_5
+```
